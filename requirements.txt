@@ -4,7 +4,7 @@ cffi==1.12.2
 chardet==3.0.4
 cryptography==2.6.1
 demjson==2.2.4
-Django==2.1
+Django==2.1.6
 django-redis==4.10.0
 django-summernote==0.8.11.4
 idna==2.8
