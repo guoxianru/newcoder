@@ -1,0 +1,59 @@
+.news_infos .dlts {
+    border: none;
+    background: none;
+    font-size: 22px;
+    margin-left: 250px;
+    margin-top: 30px;
+}
+
+.news_infos .dlts a {
+    color: #00A7EB;
+}
+
+.news_infos .dlts a:hover {
+    color: #3276b1;
+}
+
+.news_infos .nr {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.news_infos #input_content {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.news_infos .tjplp {
+    background-image: none;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.news_infos .tjpl {
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.news_infos .qbpl {
+    margin-top: 80px;
+    margin-left: 20px;
+}
+
+.itemlist .pltx {
+    height: 40px;
+    width: 40px;
+    margin-top: 20px;
+    border-radius: 50%
+}
+
+.itemlist .plyh {
+    padding-top: 10px;
+}
+
+.itemlist .plnr {
+    margin-left: 60px;
+}

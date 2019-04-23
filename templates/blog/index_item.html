@@ -1,0 +1,32 @@
+{#首页加载更多#}
+{% load staticfiles %}
+
+{% for item in articles %}
+    <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+        <h3 class="blogtitle">
+            <a target="_blank" href="{% url 'blog:article_detail' item.id %}">
+                {{ item.title }}
+            </a>
+        </h3>
+        <span class="blogpic">
+                        <a target="_blank" href="{% url 'blog:article_detail' item.id %}">
+                            <img src="{% static item.pic.name %}" alt="">
+                        </a>
+                    </span>
+        <p class="blogtext">{{ item.label }}</p>
+        <div class="bloginfo">
+            <ul>
+                <li class="author"><a>{{ item.author.nickname }}</a></li>
+                <li class="lmname">
+                    <a href="{% url 'blog:article_list' 'type' item.type.id %}"
+                       target="_blank">{{ item.type.typename }}</a>
+                </li>
+                <li class="timer">{{ item.addtime }}</li>
+                <li class="view"><span>{{ item.count }}</span>已阅读</li>
+                <li class="like">{{ item.like }}</li>
+            </ul>
+        </div>
+    </div>
+{% empty %}
+    <h1>文章已全部显示，没有新文章！</h1>
+{% endfor %}

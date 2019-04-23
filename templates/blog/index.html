@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-网站首页
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/more.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+    <article>
+        {#首页轮播区开始#}
+        <div class="picsbox">
+            {#轮播开始#}
+            <div class="banner">
+                <div id="banner" class="fader">
+                    {% for item in articles_plant %}
+                        <li class="slide">
+                            <a href="{% url 'blog:article_detail' item.id %}" target="_blank">
+                                <img src="{% static item.pic.name %}">
+                                <span class="imginfo">{{ item.title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                    <div class="fader_controls">
+                        <div class="page prev" data-target="prev">&lsaquo;</div>
+                        <div class="page next" data-target="next">&rsaquo;</div>
+                        <ul class="pager_list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {#轮播结束#}
+
+            {#置顶文章开始#}
+            <div class="toppic">
+                {% for item in articles_top %}
+                    <li>
+                        <a href="{% url 'blog:article_detail' item.id %}" target="_blank">
+                            <i><img src="{% static item.pic.name %}"></i>
+                            <h2>{{ item.title }}</h2>
+                            <span>{{ item.type.typename }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </div>
+            {#置顶文章结束#}
+        </div>
+        {#首页轮播区结束#}
+
+        {#背景图#}
+        <div class="blank"></div>
+        {#背景图#}
+
+        {#首页文章列表开始#}
+        <div class="blogsbox">
+            <div class="itemlist">
+                {% for item in articles %}
+                    <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                        <h3 class="blogtitle">
+                            <a target="_blank" href="{% url 'blog:article_detail' item.id %}">
+                                {{ item.title }}
+                            </a>
+                        </h3>
+                        <span class="blogpic">
+                            <a target="_blank" href="{% url 'blog:article_detail' item.id %}">
+                                <img src="{% static item.pic.name %}" alt="">
+                            </a>
+                        </span>
+                        <p class="blogtext">{{ item.label }}</p>
+                        <div class="bloginfo">
+                            <ul>
+                                <li class="author"><a>{{ item.author.nickname }}</a></li>
+                                <li class="lmname">
+                                    <a href="{% url 'blog:article_list' 'type' item.type.id %}"
+                                       target="_blank">{{ item.type.typename }}</a>
+                                </li>
+                                <li class="timer">{{ item.addtime }}</li>
+                                <li class="view"><span>{{ item.count }}</span>已阅读</li>
+                                <li class="like">{{ item.like }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h1>系统在维护中，请下次访问！</h1>
+                {% endfor %}
+            </div>
+            {#首页加载更多按钮#}
+            <div class="blogs">
+                <p><input type="button" value="点击加载更多" class="more"></p>
+            </div>
+            {#首页加载更多按钮#}
+        </div>
+        {#首页文章列表结束#}
+
+        {#侧边栏#}
+        {% include 'blog/base_sidebar_wz.html' %}
+        {#侧边栏#}
+
+    </article>
+
+    {#首页加载更多ajax#}
+    <script>
+        //如果是第一页就是0
+        var pagenum = 0;
+        //注册more点击监听器
+        $(".more").click(function () {
+            pagenum++;
+            //向服务器发送加载更多请求,jquery封装的ajax
+            $.get("/blog/more/" + pagenum + "/", function (data) {
+                //根据返回的数据,判断是否为空,为空就alert()
+                if (data == "empty") {
+                    alert("所有文章已加载完毕!");
+                } else {
+                    //不为空,展示出来返回的html字符串
+                    $(".itemlist").append(data);
+                }
+            });
+        });
+    </script>
+    {#首页加载更多ajax#}
+
+{% endblock %}

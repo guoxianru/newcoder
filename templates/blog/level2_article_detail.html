@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-{{ article.title }}
+{% endblock %}
+
+{% block css %}
+    <meta itemprop="{{ article.title }}" content="{{ article.title }}"/>
+    <meta itemprop="description" name="{{ article.label }}" content="{{ article.label }}"/>
+    <meta itemprop="image" content="{% static article.pic.name %}"/>
+    <link href="{% static 'css/comment.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'ueditor/ueditor.config.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ueditor/ueditor.all.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ueditor/lang/zh-cn/zh-cn.js' %}"></script>
+    {#微信引入js#}
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    {#微信分享#}
+    <script type="text/javascript">
+        wx.config({
+            debug: false,
+            appId: 'wx5b276192ee39ab0f',
+            timestamp: '{{ timestamp }}',
+            nonceStr: '{{ nonceStr }}',
+            signature: '{{ signature }}',
+            jsApiList: [
+                'checkJsApi',
+                'updateAppMessageShareData',
+                'updateTimelineShareData'
+            ]
+        });
+        wx.ready(function () {
+            //自定义“分享给朋友”及“分享到QQ”按钮的分享内容（1.4.0）
+            wx.updateAppMessageShareData({
+                title: '{{ article.title }}',
+                desc: '{{ article.label }}',
+                link: '{{ url }}',
+                imgUrl: '{% static article.pic.name %}',
+                success: function (res) {
+                },
+                cancel: function () {
+                },
+                fail: function (res) {
+                });
+            //自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容（1.4.0）
+            wx.updateTimelineShareData({
+                title: '{{ article.title }}',
+                link: '{{ url }}',
+                imgUrl: '/static/{% static article.pic.name %}',
+                success: function (res) {
+                },
+                cancel: function () {
+                },
+                fail: function (res) {
+                },
+            });
+        });
+        wx.error(function (res) {
+            alert("error: " + res.errMsg);
+        });
+    </script>
+
+    {#微信开发#}
+{% endblock %}
+
+{% block main %}
+    <article>
+
+        <h1 class="t_nav"><span>您现在的位置是：首页 > {{ article.type }}</span>
+            <a href="/" class="n1">网站首页</a><a class="n2">{{ article.type }}</a>
+        </h1>
+        <div class="infosbox">
+            <div class="newsview">
+                <h3 class="news_title">{{ article.title }}</h3>
+                <div class="bloginfo">
+                    <ul>
+                        <li class="author"><a href="/">{{ article.author }}</a></li>
+                        <li class="lmname">
+                            <a href="{% url 'blog:article_list' 'type' article.type.id %}"
+                               target="_blank">{{ article.type }}</a>
+                        </li>
+                        <li class="timer">{{ article.addtime }}</li>
+                        <li class="view">{{ article.count }}已阅读</li>
+                        <li class="like">{{ article.like }}</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    {% for item in all_tag %}
+                        <a href="{% url 'blog:article_list' 'tag' item.id %}"
+                           target="_blank">{{ item.tagname }}</a>&nbsp;&nbsp;
+                    {% endfor %}
+                    <div class="news_about">
+                        <strong>简介</strong>{{ article.label }}
+                    </div>
+                    <div class="news_con">
+                        {% autoescape off %}
+                            {{ article.content | safe }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+
+                <div class="share">
+                    {#点赞#}
+                    <p class="diggit">
+                        <a style="cursor: pointer;" class="like_button" id="{{ article.id }}">很赞哦</a>
+                        ( <span id="like_num">{{ article.like }}</span> )
+                    </p>
+                    <script type="text/javascript">
+                        $(".like_button").click(function () {
+                            var id = $(this).attr("id");
+                            $.get("/blog/like/" + id + "/", function (data) {
+                                $("#like_num").text(data)
+                            });
+                        });
+                    </script>
+                    {#点赞#}
+
+                    {#打赏#}
+                    <p class="dasbox"><a href="javascript:void(0)" onClick="dashangToggle()" class="dashang"
+                                         title="打赏，支持一下">打赏本站</a></p>
+                    <div class="hide_box"></div>
+                    <div class="shang_box"><a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()"
+                                              title="关闭">关闭</a>
+                        <div class="shang_tit">
+                            <p>感谢您的支持，我会继续努力的!</p>
+                        </div>
+                        <div class="shang_payimg"><img src="{% static 'images/alipayimg.jpg' %}"
+                                                       alt="扫码支持" title="扫一扫">
+                        </div>
+                        <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                        <div class="shang_payselect">
+                            <div class="pay_item checked" data-id="alipay"><span class="radiobox"></span> <span
+                                    class="pay_logo"><img src="{% static 'images/alipay.jpg' %}" alt="支付宝"></span></div>
+                            <div class="pay_item" data-id="weipay"><span class="radiobox"></span> <span
+                                    class="pay_logo"><img src="{% static 'images/wechat.jpg' %}" alt=" 微信"></span></div>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $(".pay_item").click(function () {
+                                    $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+                                    var dataid = $(this).attr('data-id');
+                                    $(".shang_payimg img").attr("src", "/static/images/" + dataid + "img.jpg");
+                                    $("#shang_pay_txt").text(dataid == "alipay" ? "支付宝" : "微信");
+                                });
+                            });
+
+                            function dashangToggle() {
+                                $(".hide_box").fadeToggle();
+                                $(".shang_box").fadeToggle();
+                            }
+                        </script>
+                    </div>
+                    {#打赏#}
+                </div>
+
+                <div class="nextinfo">
+                    <p>上一篇：
+                        {% if prev_article %}
+                            <a href="{% url 'blog:article_detail' prev_aid %}">
+                                {{ prev_article.title }}
+                            </a>
+                        {% else %}
+                            没有了
+                        {% endif %}
+                    </p>
+                    <p>下一篇：
+                        {% if next_article %}
+                            <a href="{% url 'blog:article_detail' next_aid %}">
+                                {{ next_article.title }}
+                            </a>
+                        {% else %}
+                            没有了
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="otherlink">
+                    <h2>相关文章</h2>
+                    <ul>
+                        {% for item in relevant_article %}
+                            <li>
+                                <a href="{% url 'blog:article_detail' item.id %}" title="{{ item.title }}"
+                                   target="_blank">
+                                    {{ item.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                {#评论#}
+                <div class="news_pl">
+                    <h2>文章评论</h2>
+                    {% if messages %}
+                        <script>
+                            {% for msg in messages %}
+                                alert('{{ msg.message }}');
+                            {% endfor %}
+                        </script>
+                    {% endif %}
+                    {% if not request.session.user_id %}
+                        <h2 class="dlts">请先
+                            <a href="{% url 'user:sign_in' %}?next={{ request.path }}" target="_blank">
+                                登录
+                            </a>
+                            ，才可参与评论！
+                        </h2>
+                    {% else %}
+                        <form method="post" action="{% url 'blog:comment' article.id %}">
+                            {% csrf_token %}
+                            <h2 class="nr">评论内容
+                                <span style="font-size: 12px">（最长140字符，暂不支持上传图片和文件）</span>
+                            </h2>
+                            <textarea id="input_content" name="content"></textarea>
+                            <p class="dasbox tjplp">
+                                <input type="submit" value="提交评论" class="tjpl">
+                            </p>
+                            <p class="dasbox tjplp">
+                                <input type="button" value="收藏文章" id="btn-col" class="scwz">
+                            </p>
+                        </form>
+                    {% endif %}
+                    <h2 class="qbpl">全部评论( {{ comment_num }} )</h2>
+                    <div class="itemlist">
+                        {#一级评论列表#}
+                        {% for item in comments %}
+                            <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                                <span class="blogpic pltx">
+                                    <a href="">
+                                        <img src="{% static item.user.photo.name %}">
+                                    </a>
+                                </span>
+                                <div class="blogtext plyh">
+                                    {{ item.user.nickname }} 评论于 {{ item.addtime }}
+                                </div>
+                                <div class="bloginfo plnr">
+                                    <p>
+                                        {% autoescape off %}
+                                            {{ item.content | safe }}
+                                        {% endautoescape %}
+                                    </p>
+                                </div>
+                                {#二级评论列表#}
+                                {% for child in item.comment_set.all reversed %}
+                                    <div class="blogs zpl" data-scroll-reveal="enter bottom over 1s">
+                                        <span class="blogpic pltx">
+                                            <a href="">
+                                                <img src="{% static child.user.photo.name %}">
+                                            </a>
+                                        </span>
+                                        <div class="blogtext plyh">
+                                            {{ child.user.nickname }} 评论于 {{ child.addtime }}
+                                        </div>
+                                        <div class="bloginfo plnr">
+                                            <p>
+                                                {% autoescape off %}
+                                                    {{ child.content | safe }}
+                                                {% endautoescape %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {#二级评论列表#}
+                                {#我要点评#}
+                                {% if request.session.user_id %}
+                                    <input type="button" value="我要点评" class="button_reply dianping">
+                                    <div class="reply" hidden>
+                                        <form action="/blog/comment/{{ article.id }}/{{ item.id }}/" method="post">
+                                            {% csrf_token %}
+                                            <textarea name="content"
+                                                      style="width: 570px;height: 100px;font-size: 22px"></textarea>
+                                            <input type="submit" value="发布" class="fabu">
+                                        </form>
+                                    </div>
+                                {% endif %}
+                                {#我要点评#}
+                            </div>
+                        {% endfor %}
+                        {#一级评论列表#}
+                    </div>
+
+                    {#富文本评论框#}
+                    <script>
+                        var ue = UE.getEditor('input_content', {
+                            toolbars: [
+                                ['emotion', 'link']
+                            ],
+                            initialFrameWidth: "99%",
+                            initialFrameHeight: "100",
+                        });
+                    </script>
+                    {#富文本评论框#}
+
+                    {#我要点评#}
+                    <script>
+                        $(".button_reply").click(function () {
+                            //要判断一下状态,是否是隐藏
+                            if ($(this).next().is(":hidden")) {
+                                //展示隐藏的文本域
+                                $(this).next().show()
+                            } else {
+                                //隐藏文本域
+                                $(this).next().hide()
+                            }
+                        });
+                    </script>
+                    {#我要点评#}
+
+                    {#文章收藏#}
+                    <script>
+                        var aid = {{ article.id }};
+                        $("#btn-col").click(function () {
+                            $.get("/blog/article_col/" + aid + "/", function (data) {
+                                if (data == "1") {
+                                    alert("收藏成功!");
+                                } else if (data == "0") {
+                                    alert("已经收藏!");
+                                }
+                            })
+                        });
+
+                    </script>
+                    {#文章收藏#}
+
+                </div>
+                {#评论#}
+            </div>
+        </div>
+
+        {#侧边栏#}
+        {% include 'blog/base_sidebar_wz.html' %}
+        {#侧边栏#}
+
+    </article>
+{% endblock %}

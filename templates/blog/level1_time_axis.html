@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-时间轴
+{% endblock %}
+
+{% block css %}
+    <script src="{% static 'js/page.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+
+    {#背景图#}
+    <div class="pagebg timer"></div>
+    {#背景图#}
+
+    <div class="container">
+        <h1 class="t_nav">
+            <span>时光飞逝，机会就在我们眼前，何时找到了灵感，就要把握机遇，我们需要智慧和勇气去把握机会。</span>
+            <a href="/" class="n1">网站首页</a><a class="n2">时间轴</a>
+        </h1>
+        <div class="timebox">
+            <ul id="list" style="display:none;">
+                {% for item in articles %}
+                    <li>
+                        <span>{{ item.addtime }}</span>
+                        <a href="{% url 'blog:article_detail' item.id %}" title="{{ item.title }}">
+                            {{ item.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul id="list2">
+            </ul>
+            <script src="{% static 'js/page2.js' %}"></script>
+        </div>
+    </div>
+{% endblock %}

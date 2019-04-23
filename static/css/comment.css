@@ -1,0 +1,100 @@
+.news_pl .dlts {
+    border: none;
+    background: none;
+    font-size: 22px;
+    margin-left: 180px;
+    margin-top: 80px;
+}
+
+.news_pl .dlts a {
+    color: #00A7EB;
+}
+
+.news_pl .dlts a:hover {
+    color: #3276b1;
+}
+
+.news_pl .nr {
+    border: none;
+    background: none;
+}
+
+.news_pl #input_content {
+    margin-left: 30px;
+}
+
+.news_pl .tjplp {
+    background-image: none;
+    margin-top: 10px;
+}
+
+.news_pl .tjpl {
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.news_pl .scwz {
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.news_pl .qbpl {
+    margin-top: 55px;
+}
+
+.itemlist .pltx {
+    height: 40px;
+    width: 40px;
+    margin-top: 20px;
+    border-radius: 50%
+}
+
+.itemlist .plyh {
+    padding-top: 10px;
+}
+
+.itemlist .plnr {
+    margin-left: 60px;
+}
+
+.itemlist .dianping {
+    margin-left: 540px;
+    margin-top: 20px;
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    font-size: 14px;
+    background: indianred;
+    color: whitesmoke;
+    border: none;
+    cursor: pointer;
+}
+
+.itemlist .reply form {
+    margin-left: 50px;
+    margin-top: 20px;
+}
+
+.itemlist .fabu {
+    margin-left: 520px;
+    margin-top: 10px;
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    font-size: 12px;
+    background: #3276b1;
+    color: whitesmoke;
+    border: none;
+    cursor: pointer;
+}
+
+.itemlist .zpl {
+    width: 450px;
+    margin-left: 50px;
+}

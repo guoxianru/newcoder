@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-留言板
+{% endblock %}
+
+{% block css %}
+    <link href="{% static 'css/leave_msg.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'ueditor/ueditor.config.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ueditor/ueditor.all.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ueditor/lang/zh-cn/zh-cn.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+
+    {#背景图#}
+    <div class="pagebg ab"></div>
+    {#背景图#}
+
+    <div class="container">
+        <h1 class="t_nav">
+            <span>你，我生命中一个重要的过客，我们之所以是过客，因为你未曾会为我停留。</span>
+            <a href="/" class="n1">网站首页</a><a class="n2">留言</a>
+        </h1>
+        <div class="news_infos">
+            {% if messages %}
+                <script>
+                    {% for msg in messages %}
+                        alert('{{ msg.message }}');
+                    {% endfor %}
+                </script>
+            {% endif %}
+            {% if not request.session.user_id %}
+                <h2 class="dlts">请先
+                    <a href="{% url 'user:sign_in' %}?next={{ request.path }}" target="_blank">
+                        登录
+                    </a>，才可参与留言！
+                </h2>
+            {% else %}
+                <form method="post" action="{% url 'blog:leave_msg' %}">
+                    {% csrf_token %}
+                    <h2 class="nr">留言内容
+                        <span style="font-size: 12px">（最长140字符，暂不支持上传图片和文件）</span>
+                    </h2>
+                    <textarea id="input_content" name="content"></textarea>
+                    <p class="dasbox tjplp">
+                        <input type="submit" value="提交留言" class="tjpl">
+                    </p>
+                </form>
+            {% endif %}
+            <h2 class="qbpl">全部留言( {{ msg_num }} )</h2>
+            <div class="itemlist">
+                {% for item in msgs %}
+                    <div class="blogs zpl" data-scroll-reveal="enter bottom over 1s">
+                    <span class="blogpic pltx">
+                        <a href="">
+                            <img src="{% static item.user.photo.name %}">
+                        </a>
+                    </span>
+                        <div class="blogtext plyh">
+                            {{ item.user.nickname }} 留言于 {{ item.addtime }}
+                        </div>
+                        <div class="bloginfo plnr">
+                            <p>
+                                {% autoescape off %}
+                                    {{ item.content | safe }}
+                                {% endautoescape %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+            var ue = UE.getEditor('input_content', {
+                toolbars: [
+                    ['emotion', 'link']
+                ],
+                initialFrameWidth: "99%",
+                initialFrameHeight: "100",
+            });
+        </script>
+
+        {#信息侧边栏#}
+        {% include 'blog/base_sidebar_me.html' %}
+        {#信息侧边栏#}
+
+    </div>
+{% endblock %}

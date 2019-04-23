@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-收藏记录
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block main %}
+    <article>
+        <div class="news_pl">
+            {#会员侧边栏#}
+            {% include 'user/level1_user_menu.html' %}
+            {#会员侧边栏#}
+            <h3>收藏记录</h3>
+            <div class="itemlist">
+                {% for item in articlecols %}
+                    <div class="blogs zpl" data-scroll-reveal="enter bottom over 1s">
+                    <span class="blogpic pltx">
+                        <a href="">
+                            <img src="{% static item.user.photo.name %}" style="width: 50px;height: 50px">
+                        </a>
+                    </span>
+                        <div class="blogtext plyh">
+                            收藏
+                            <a target="_blank"
+                               href="{% url 'blog:article_detail' item.article.id %}">
+                                {{ item.article.title }}
+                            </a>
+                            于 {{ item.addtime }}
+                        </div>
+                        <div class="bloginfo plnr">
+                            <p>
+                                {% autoescape off %}
+                                    {{ item.content | safe }}
+                                {% endautoescape %}
+                            </p>
+                        </div>
+                        <a href="{% url 'user:articlecol_del' item.id %}">删除</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </article>
+{% endblock %}

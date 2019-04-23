@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-关于我
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block main %}
+
+    {#背景图#}
+    <div class="pagebg ab"></div>
+    {#背景图#}
+
+    <div class="container">
+        <h1 class="t_nav">
+            <span>像“草根”一样，紧贴着地面，低调的存在，冬去春来，枯荣无恙。</span>
+            <a href="/" class="n1">网站首页</a><a class="n2">关于我</a>
+        </h1>
+        <div class="news_infos">
+            <ul>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    一个90后新码农！入行以来。一直潜心研究Python技术，一边工作一边积累经验，分享一些技术心得和人生感悟。
+                    <br/>
+                </p>
+                <br/>
+                <h2>关于本站</h2>
+                &nbsp;
+                <p>域&nbsp;&nbsp;&nbsp;&nbsp;名：<a href="http://www.newcoder.top">www.newcoder.top</a>&nbsp;
+                    创建于2018-10-20 02:35:07&nbsp;
+                </p>
+                <br/>
+                <p>服务器：阿里云服务器&nbsp;&nbsp;
+                    <a
+                            href="https://promotion.aliyun.com/ntms/act/campus2018.html?spm=5176.230344.1224685.2.3933443eqhsFsT"
+                            target="_blank">
+                        <span style="color:#FF0000;"><strong>前往阿里云官网购买（学生优惠）&gt;&gt;</strong></span>
+                    </a>
+                </p>
+                <br/>
+                <p>备案号：冀ICP备18036301号-1</p>
+                <br/>
+                <p>前&nbsp;&nbsp;&nbsp;&nbsp;端：青于蓝&nbsp;&nbsp;
+                    <a
+                            href="https://www.yangqq.com/download/div/"
+                            target="_blank">
+                        <span style="color:#FF0000;"><strong>前往青于蓝下载模板&gt;&gt;</strong></span>
+                    </a>
+                </p>
+                <br/>
+                <p>后&nbsp;&nbsp;&nbsp;&nbsp;台：Python-Django-MySQL</p>
+            </ul>
+        </div>
+
+        {#信息侧边栏#}
+        {% include 'blog/base_sidebar_me.html' %}
+        {#信息侧边栏#}
+
+    </div>
+{% endblock %}

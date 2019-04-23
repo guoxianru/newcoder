@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-{{ name_name }}
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block main %}
+
+    {#背景图#}
+    <div class="pagebg sh"></div>
+    {#背景图#}
+
+    <div class="container">
+        <h1 class="t_nav"><span>{{ name_label }}</span>
+            <a href="/" class="n1">网站首页</a><a class="n2">{{ name_name }}</a>
+        </h1>
+
+        {#文章列表开始#}
+        <div class="blogsbox">
+            {% for item in page %}
+                <div class="blogs" data-scroll-reveal="enter bottom over 1s">
+                    <h3 class="blogtitle">
+                        <a href="{% url 'blog:article_detail' item.id %}" target="_blank">{{ item.title }}</a>
+                    </h3>
+                    <span class="blogpic">
+                        <a href="{% url 'blog:article_detail' item.id %}" title="{{ item.title }}" target="_blank">
+                        <img src="{% static item.pic.name %}" alt=""></a>
+                    </span>
+                    <p class="blogtext">{{ item.label }}</p>
+                    <div class="bloginfo">
+                        <ul>
+                            <li class="author"><a>{{ item.author.nickname }}</a></li>
+                            <li class="lmname">
+                                <a href="{% url 'blog:article_list' 'type' item.type.id %}" target="_blank">
+                                    {{ item.type.typename }}
+                                </a>
+                            </li>
+                            <li class="timer">{{ item.addtime }}</li>
+                            <li class="view"><span>{{ item.count }}</span>&nbsp;已阅读</li>
+                            <li class="like">{{ item.like }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {#分页#}
+            <div class="pagelist">
+                <a title="Total record">&nbsp;<b>{{ p.num_pages }}</b>&nbsp;</a>&nbsp;
+
+                <span>{{ page.number }}/{{ p.num_pages }}</span>&nbsp;
+
+                <a href="{% url 'blog:article_list' word tid 1 %}">首页</a>
+
+                {% if page.has_previous %}
+                    <a href="{% url 'blog:article_list' word tid page.previous_page_number %}">上一页</a>&nbsp;
+                {% else %}
+                    <span>上一页</span>&nbsp;
+                {% endif %}
+
+                {% for i in prange %}
+                    <a href="{% url 'blog:article_list' word tid i %}">{{ i }}</a>&nbsp;
+                {% endfor %}
+
+                {% if page.has_next %}
+                    <a href="{% url 'blog:article_list' word tid page.next_page_number %}">下一页</a>&nbsp;
+                {% else %}
+                    <span>下一页</span>&nbsp;
+                {% endif %}
+
+                <a href="{% url 'blog:article_list' word tid p.num_pages %}">尾页</a>
+            </div>
+            {#分页#}
+
+        </div>
+        {#文章列表结束#}
+
+        {#侧边栏#}
+        {% include 'blog/base_sidebar_wz.html' %}
+        {#侧边栏#}
+
+    </div>
+{% endblock %}

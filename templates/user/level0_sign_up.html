@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-注册
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/sign_up.css' %}">
+{% endblock %}
+
+{% block main %}
+    <article>
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+
+        <div class="signup">
+            <h2>
+                <p>
+                    <span>注册新码农，让编程更简单</span>
+                    <a href="{% url 'user:sign_in' %}">使用已有账号登陆</a>
+                </p>
+            </h2>
+
+            <form method="post" action="{% url 'user:sign_up' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p style="margin-left: 450px;color: red">{{ msg }}</p>
+                <table>
+                    <tr>
+                        <td>请输入用户名</td>
+                        <td>
+                            <input type="text" name="username" value="{{ data.username }}">
+                        </td>
+                        <td>{{ errors.username.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>请输入昵称</td>
+                        <td>
+                            <input type="text" name="nickname" value="{{ data.nickname }}">
+                        </td>
+                        <td>{{ errors.nickname.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>请输入密码</td>
+                        <td>
+                            <input type="password" name="password" value="{{ data.password }}">
+                        </td>
+                        <td>{{ errors.password.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>请再次输入密码</td>
+                        <td>
+                            <input type="password" name="password1">
+                        </td>
+                        <td>{{ errors.password.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>头像上传</td>
+                        <td>
+                            <input type="file" name="photo">
+                        </td>
+                        <td>{{ errors.photo.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><input type="submit" value="注册" class="signup_niu"></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+
+        {#背景图#}
+        <div class="blank"></div>
+        {#背景图#}
+
+    </article>
+{% endblock %}

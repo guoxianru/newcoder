@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-登陆
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/sign_in.css' %}">
+{% endblock %}
+
+{% block main %}
+    <article>
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+
+        <div class="signin">
+            <h2>
+                <p>
+                    <span>账号密码登陆</span>
+                    <a href="{% url 'user:sign_up' %}">注册新用户</a>
+                </p>
+            </h2>
+
+            <form method="post" action="{% url 'user:sign_in' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p style="margin-left: 450px;color: red">{{ msg }}</p>
+                <table>
+                    <tr>
+                        <td>请输入用户名</td>
+                        <td>
+                            <input type="text" name="username" value="{{ username }}">
+                        </td>
+                        <td>{{ errors.username.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>请输入密码</td>
+                        <td>
+                            <input type="password" name="password" value="{{ data.password }}">
+                        </td>
+                        <td>{{ errors.password.0 }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input type="checkbox" name="save" value="1" class="checkbox"
+                                   {% if username %}checked{% endif %}>记住用户名
+                        </td>
+                    </tr>
+                    <tr>
+                        <input name="next" value="{{ next }}" hidden>
+                        <td colspan="3"><input type="submit" value="登陆" class="signin_niu"></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+
+        {#背景图#}
+        <div class="blank"></div>
+        {#背景图#}
+
+    </article>
+{% endblock %}

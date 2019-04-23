@@ -1,0 +1,42 @@
+.signin {
+    width: 1000px;
+    height: 540px;
+    background: #ffffff;
+    margin-left: 80px;
+}
+
+.signin h2 {
+    width: 1000px;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #333333;
+}
+
+.signin h2 span {
+    margin-left: 20px;
+    font-size: 20px;
+    display: inline-block;
+    width: 240px;
+    border-bottom: 3px solid #008df3;
+}
+
+.signin h2 a {
+    margin-left: 600px;
+    font-size: 13px;
+    color: #008df3;
+    font-weight: normal
+}
+
+.signin form {
+    margin-top: 100px;
+}
+
+.signin table {
+    font-size: 14px;
+    margin: auto auto;
+    text-align: center;
+}
+
+.signin tr {
+    height: 50px;
+}

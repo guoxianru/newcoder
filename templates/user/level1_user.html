@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    新码农-用户中心
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block main %}
+    <article>
+        <div class="picsbox">
+
+            {#会员侧边栏#}
+            {% include 'user/level1_user_menu.html' %}
+            {#会员侧边栏#}
+
+            <h3>用户中心</h3>
+            {% if messages %}
+                <script>
+                    {% for msg in messages %}
+                        alert('{{ msg.message }}');
+                    {% endfor %}
+                </script>
+            {% endif %}
+            <form method="post" enctype="multipart/form-data" action="{% url 'user:user' user.id %}">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>用户名</td>
+                        <td><input type="text" name="username" value="{{ user.username }}" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>昵称</td>
+                        <td><input type="text" name="nickname" value="{{ user.nickname }}"></td>
+                    </tr>
+                    <tr>
+                        <td>性别</td>
+                        <td>
+                            {% if user.gender == 0 %}
+                                <input type="radio" name="gender" value="0" checked/> 男
+                                <input type="radio" name="gender" value="1"/> 女
+                            {% elif user.gender == 1 %}
+                                <input type="radio" name="gender" value="0"/> 男
+                                <input type="radio" name="gender" value="1" checked/> 女
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>邮箱</td>
+                        <td><input type="email" name="email" value="{{ user.email }}"></td>
+                    </tr>
+                    <tr>
+                        <td>手机号</td>
+                        <td><input type="text" name="phone" value="{{ user.phone }}"></td>
+                    </tr>
+                    <tr>
+                        <td>出生年月</td>
+                        <td><input type="date" name="birthday" value="{{ user.birthday | safe }}"></td>
+                    </tr>
+                    <tr>
+                        <td>头像</td>
+                        <td>
+                            <img src="{% static user.photo.name %}"
+                                 style="height: 40px;width: 40px;margin-top: 20px;border-radius: 50%">
+                            <input type="file" name="photo">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>个人简介</td>
+                        <td><input type="text" name="desc" value="{{ user.desc }}"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="保存"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </article>
+{% endblock %}
+

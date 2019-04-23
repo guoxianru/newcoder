@@ -1,0 +1,105 @@
+<!doctype html>
+
+{#导入静态文件#}
+{% load staticfiles %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {#本页标题#}
+        {% block title %}
+        {% endblock %}
+        {#本页标题#}
+    </title>
+    <meta name="keywords" content="新码农,个人博客,技术分享"/>
+    <meta name="description" content="新码农博客，是一个站在Python全栈开发之路的程序员个人网站。"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+    <link href="{% static 'css/m.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.easyfader.min.js' %}"></script>
+    <script src="{% static 'js/scrollReveal.js' %}"></script>
+    <script src="{% static 'js/common.js' %}"></script>
+    <!--[if lt IE 9]><script src="js/modernizr.js"></script><![endif]-->
+    {#标题栏显示图标#}
+    <link rel="icon" href="{% static 'images/logo_icon_.bmp' %}" type="image/x-icon">
+    {#收藏夹显示图标#}
+    <link rel="shortcut icon" href="{% static 'images/logo_icon_.bmp' %}" type="image/x-icon">
+
+    {#其他css、js文件#}
+    {% block css %}
+    {% endblock %}
+    {#其他css、js文件#}
+
+</head>
+<body>
+{#网页头部开始#}
+<header>
+    {#导航开始#}
+    <div class="menu">
+        <nav class="nav" id="topnav">
+            <h1 class="logo">
+                <a href="/">
+                    <img src="{% static 'images/logo_index.jpg' %}"
+                         style="height: 70px;width: 70px;margin-top: 5px;border-radius: 50%">
+                </a>
+            </h1>
+            <li style="margin-left: -70px"><a href="/">网站首页</a></li>
+            <li><a href="{% url 'blog:article_list' 'type' 1 %}">心情随笔</a></li>
+            <li><a href="{% url 'blog:article_list' 'type' 2 %}">时事点评</a></li>
+            <li><a href="{% url 'blog:article_list' 'type' 3 %}">技术分享</a></li>
+            <li><a href="{% url 'blog:time_axis' %}">时间轴</a></li>
+            <li><a href="{% url 'blog:about_me' %}">关于我</a></li>
+            <li style="margin-right: 40px"><a href="{% url 'blog:leave_msg' %}">留言板</a></li>
+            {% if not request.session.user_id %}
+                <li><a href="{% url 'user:sign_up' %}">注册</a></li>
+                <li><a href="{% url 'user:sign_in' %}">登陆</a></li>
+            {% else %}
+                <li>
+                    <a href="{% url 'user:user' request.session.user_id %}">
+                        <img src="{% static request.session.user_photo %}"
+                             style="height: 40px;width: 40px;margin-top: 20px;border-radius: 50%">
+                    </a>
+                </li>
+                <li><a href="{% url 'user:sign_out' %}">退出账号</a></li>
+            {% endif %}
+            {#搜索开始#}
+            <div id="search_bar" class="search_bar">
+                <form id="searchform" action="{% url 'blog:search' %}" method="post" name="searchform">
+                    {% csrf_token %}
+                    <input class="input" placeholder="想搜点什么呢..." type="text" name="keyboard" id="keyboard">
+                    <input type="hidden" name="show" value="title"/>
+                    <input type="hidden" name="tempid" value="1"/>
+                    <input type="hidden" name="tbname" value="news">
+                    <input type="hidden" name="Submit" value="搜索"/>
+                    <span class="search_ico"></span>
+                </form>
+            </div>
+            {#搜索结束#}
+        </nav>
+    </div>
+    {#导航结束#}
+</header>
+{#网页头部结束#}
+
+{#内容主体开始#}
+{% block main %}
+{% endblock %}
+{#内容主体结束#}
+
+{#网页底部开始#}
+<footer>
+    <p>
+        <strong>Copyright &copy; 2019-2020</strong> |
+        <a href="/admin" target="_blank">All Rights Reserved</a> |
+        <a href="/" target="_blank">newcoder.top</a> |
+        <a href="http://www.miitbeian.gov.cn/" target="_blank">冀ICP备18036301号-1</a>
+    </p>
+    <a href="#" class="cd-top">Top</a>
+</footer>
+{#网页底部结束#}
+
+</body>
+</html>
