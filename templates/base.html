@@ -37,6 +37,7 @@
 <body>
 {#网页头部开始#}
 <header>
+
     {#导航开始#}
     <div class="menu">
         <nav class="nav" id="topnav">
@@ -81,6 +82,34 @@
         </nav>
     </div>
     {#导航结束#}
+
+    {#导航移动端开始#}
+    <div id="mnav">
+        <h2><a href="/" class="mlogo">新码农博客</a><span class="navicon"></span></h2>
+        <dl class="list_dl">
+            <dt class="list_dt"><a href="/">网站首页</a></dt>
+            <dt class="list_dt"><a href="{% url 'blog:article_list' 'type' 1 %}">心情随笔</a></dt>
+            <dt class="list_dt"><a href="{% url 'blog:article_list' 'type' 2 %}">时事点评</a></dt>
+            <dt class="list_dd"><a href="{% url 'blog:article_list' 'type' 3 %}">技术分享</a></dt>
+            <dt class="list_dt"><a href="{% url 'blog:time_axis' %}">时间轴</a></dt>
+            <dt class="list_dd"><a href="{% url 'blog:about_me' %}">关于我</a></dt>
+            <dt class="list_dt"><a href="{% url 'blog:leave_msg' %}">留言板</a></dt>
+            {% if not request.session.user_id %}
+                <dt class="list_dt"><a href="{% url 'user:sign_up' %}">注册</a></dt>
+                <dt class="list_dt"><a href="{% url 'user:sign_in' %}">登陆</a></dt>
+            {% else %}
+                <dt class="list_dt">
+                    <a href="{% url 'user:user' request.session.user_id %}">
+                        <img src="{% static request.session.user_photo %}"
+                             style="height: 40px;width: 40px;margin-top: 20px;border-radius: 50%">
+                    </a>
+                </dt>
+                <dt class="list_dt"><a href="{% url 'user:sign_out' %}">退出账号</a></dt>
+            {% endif %}
+        </dl>
+    </div>
+    {#导航移动端结束#}
+
 </header>
 {#网页头部结束#}
 

@@ -111,6 +111,8 @@ def article_detail(request, aid):
     for i in all_tag:
         article_tag = Article.objects.filter(tag=i.id)
         relevant_article += article_tag
+    if len(relevant_article) > 10:
+        relevant_article = set(relevant_article[:10])
     # 根据父级字段是否有值来筛选出直接评论文章的评论
     comments = article.comment_set.filter(parent=None).order_by("-addtime")
     # 文章浏览量+1
@@ -238,6 +240,6 @@ def leave_msg(request):
 @user_login_req
 def search(request):
     keyword = request.POST.get('keyboard', '')
-    articles = Article.objects.filter(Q(title__contains=keyword) | Q(author__nickname__contains=keyword))
+    articles = Article.objects.filter(Q(title__icontains=keyword) | Q(author__nickname__icontains=keyword))
     articles_num = len(articles)
     return render(request, 'blog/level3_search.html', locals())

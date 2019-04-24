@@ -10,6 +10,7 @@
     <meta itemprop="description" name="{{ article.label }}" content="{{ article.label }}"/>
     <meta itemprop="image" content="{% static article.pic.name %}"/>
     <link href="{% static 'css/comment.css' %}" rel="stylesheet">
+    <link href="{% static 'css/article.css' %}" rel="stylesheet">
     <script type="text/javascript" src="{% static 'ueditor/ueditor.config.js' %}"></script>
     <script type="text/javascript" src="{% static 'ueditor/ueditor.all.js' %}"></script>
     <script type="text/javascript" src="{% static 'ueditor/lang/zh-cn/zh-cn.js' %}"></script>
@@ -92,7 +93,7 @@
                     <div class="news_about">
                         <strong>简介</strong>{{ article.label }}
                     </div>
-                    <div class="news_con">
+                    <div class="news_con" id="article_content">
                         {% autoescape off %}
                             {{ article.content | safe }}
                         {% endautoescape %}
