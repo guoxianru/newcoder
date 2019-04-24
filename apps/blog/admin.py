@@ -36,8 +36,7 @@ class Tagadmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'author', 'type', 'addtime', 'pic', 'like', 'count', 'is_plant', 'is_top',
-                    'is_recommend']
+    list_display = ['id', 'title', 'author', 'type', 'like', 'count', 'is_plant', 'is_top', 'is_recommend']
     filter_horizontal = ('tag',)
     # list_display_links 设置其他字段也可以点击链接进入编辑界面
     list_display_links = ['id', 'title']
