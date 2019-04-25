@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-    新码农-关于我
+    新码农-{{ author.nickname }}
 {% endblock %}
 
 {% block css %}
@@ -17,16 +17,19 @@
     <div class="container">
         <h1 class="t_nav">
             <span>像“草根”一样，紧贴着地面，低调的存在，冬去春来，枯荣无恙。</span>
-            <a href="/" class="n1">网站首页</a><a class="n2">关于我</a>
+            <a href="/" class="n1">网站首页</a><a class="n2">{{ author.nickname }}</a>
         </h1>
         <div class="news_infos">
             <ul>
-                <h2>关于站长</h2>
+                <h2>关于作者</h2>
                 <br/>
-                <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    一个90后新码农！入行以来。一直潜心研究Python技术，一边工作一边积累经验，分享一些技术心得和人生感悟。
-                </p>
+                <p>昵称：{{ author.nickname }}</p>
+                <p>生日：{{ author.birthday }}</p>
+                <p>性别：{{ author.get_gender_display }}</p>
+                <p>手机：{{ author.phone }}</p>
+                <p>邮箱：{{ author.email }}</p>
+                <p>作者简介：{{ author.desc }}</p>
+                <p>注册时间：{{ author.addtime }}</p>
                 <br/>
                 <h2>关于本站</h2>
                 <br/>

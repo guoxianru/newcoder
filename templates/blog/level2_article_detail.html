@@ -75,7 +75,11 @@
                 <h3 class="news_title">{{ article.title }}</h3>
                 <div class="bloginfo">
                     <ul>
-                        <li class="author"><a href="/">{{ article.author }}</a></li>
+                        <li class="author">
+                            <a href="{% url 'blog:author_info' article.author.id %}" target="_blank">
+                                {{ article.author.nickname }}
+                            </a>
+                        </li>
                         <li class="lmname">
                             <a href="{% url 'blog:article_list' 'type' article.type.id %}"
                                target="_blank">{{ article.type }}</a>

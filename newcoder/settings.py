@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 SECRET_KEY = '%2%*k6t5z1-%lb#x6(#w#8c4ai*$0y(%qsf&r+6893l9$iwu3v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,7 +76,7 @@ TEMPLATES = [
                 # 侧边栏推荐文章
                 'blog.global_tuijian.recommend',
                 # 微信
-                'blog.wx_token.getSignPackage'
+                # 'blog.wx_token.getSignPackage'
             ],
         },
     },

@@ -40,6 +40,8 @@ urlpatterns = [
     path("article_col/<int:aid>/", views.article_col, name='article_col'),
     # 留言
     path("leave_msg/", views.leave_msg, name='leave_msg'),
-    # 留言
+    # 搜索
     path("search/", views.search, name='search'),
+    # 作者信息
+    path("author_info/<int:aid>/", views.author_info, name='author_info'),
 ]

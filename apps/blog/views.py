@@ -243,3 +243,9 @@ def search(request):
     articles = Article.objects.filter(Q(title__icontains=keyword) | Q(author__nickname__icontains=keyword))
     articles_num = len(articles)
     return render(request, 'blog/level3_search.html', locals())
+
+
+# 作者信息
+def author_info(request, aid):
+    author = User.objects.get(id=aid)
+    return render(request, 'blog/level4_author_info.html', locals())

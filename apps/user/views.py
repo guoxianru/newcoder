@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.db.models.query_utils import Q
 from django.contrib import messages
@@ -6,6 +7,28 @@ from django.contrib import messages
 from user.models import *
 from blog.models import *
 from user.forms import SignupForm, LoginForm
+
+
+# 验证登陆装饰器
+def user_login_req(func):
+    def inner(request, *args, **kwargs):
+        obj = request.session.get('user_id')
+        if obj:
+            # 已经登录
+            return func(request, *args, **kwargs)
+        else:
+            # 没有登录
+            # 判断发送的请求是不是ajax
+            # 如果是ajax，则返回一个redirect字符串
+            # 表示是一个ajax请求
+            if 'XMLHttpRequest' == request.META.get('HTTP_X_REQUESTED_WITH'):
+                return HttpResponse('请登录')
+            else:
+                # 不是ajax请求，是浏览器发送的请求，正常返回登录
+                messages.success(request, "请先登录！！！")
+                return redirect('/user/sign_in/')
+
+    return inner
 
 
 # 注册
@@ -72,6 +95,7 @@ def sign_in(request):
 
 
 # 注销
+@user_login_req
 def sign_out(request):
     # 清空session存储的数据
     request.session.flush()
@@ -79,6 +103,7 @@ def sign_out(request):
 
 
 # 用户中心
+@user_login_req
 def user(request, uid):
     user = User.objects.get(id=uid)
     if request.method == 'POST':
@@ -151,6 +176,7 @@ def user(request, uid):
 
 
 # 用户修改密码
+@user_login_req
 def repwd(request, uid):
     user = User.objects.get(id=uid)
     if request.method == 'POST':
@@ -171,6 +197,7 @@ def repwd(request, uid):
 
 
 # 用户评论记录
+@user_login_req
 def comment(request, uid):
     user = User.objects.get(id=uid)
     comments = Comment.objects.filter(user=user)
@@ -178,6 +205,7 @@ def comment(request, uid):
 
 
 # 用户删除评论记录
+@user_login_req
 def comment_del(request, cid):
     uid = request.session.get('user_id')
     comment = Comment.objects.get(id=cid)
@@ -186,6 +214,7 @@ def comment_del(request, cid):
 
 
 # 用户收藏记录
+@user_login_req
 def articlecol(request, uid):
     user = User.objects.get(id=uid)
     articlecols = Articlecol.objects.filter(user=user)
@@ -193,6 +222,7 @@ def articlecol(request, uid):
 
 
 # 用户删除收藏记录
+@user_login_req
 def articlecol_del(request, cid):
     uid = request.session.get('user_id')
     articlecol = Articlecol.objects.get(id=cid)
