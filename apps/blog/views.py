@@ -246,6 +246,7 @@ def search(request):
 
 
 # 作者信息
+@user_login_req
 def author_info(request, aid):
     author = User.objects.get(id=aid)
     return render(request, 'blog/level4_author_info.html', locals())
