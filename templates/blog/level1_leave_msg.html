@@ -54,7 +54,7 @@
                 {% for item in msgs %}
                     <div class="blogs zpl" data-scroll-reveal="enter bottom over 1s">
                     <span class="blogpic pltx">
-                        <a href="">
+                        <a href="{% url 'blog:author_info' item.user.id %}" target="_blank">
                             <img src="{% static item.user.photo.name %}">
                         </a>
                     </span>

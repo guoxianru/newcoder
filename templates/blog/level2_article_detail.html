@@ -231,7 +231,7 @@
                         {% for item in comments %}
                             <div class="blogs" data-scroll-reveal="enter bottom over 1s">
                                 <span class="blogpic pltx">
-                                    <a href="">
+                                    <a href="{% url 'blog:author_info' item.user.id %}" target="_blank">
                                         <img src="{% static item.user.photo.name %}">
                                     </a>
                                 </span>
@@ -249,7 +249,7 @@
                                 {% for child in item.comment_set.all reversed %}
                                     <div class="blogs zpl" data-scroll-reveal="enter bottom over 1s">
                                         <span class="blogpic pltx">
-                                            <a href="">
+                                            <a href="{% url 'blog:author_info' child.user.id %}" target="_blank">
                                                 <img src="{% static child.user.photo.name %}">
                                             </a>
                                         </span>
