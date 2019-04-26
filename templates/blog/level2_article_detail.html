@@ -6,9 +6,11 @@
 {% endblock %}
 
 {% block css %}
+    {#QQ分享标签#}
     <meta itemprop="{{ article.title }}" content="{{ article.title }}"/>
     <meta itemprop="description" name="{{ article.label }}" content="{{ article.label }}"/>
     <meta itemprop="image" content="{% static article.pic.name %}"/>
+    {#QQ分享标签#}
     <link href="{% static 'css/comment.css' %}" rel="stylesheet">
     <link href="{% static 'css/article.css' %}" rel="stylesheet">
     <script type="text/javascript" src="{% static 'ueditor/ueditor.config.js' %}"></script>
@@ -66,6 +68,14 @@
 
 {% block main %}
     <article>
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
 
         <h1 class="t_nav"><span>您现在的位置是：首页 > {{ article.type }}</span>
             <a href="/" class="n1">网站首页</a><a class="n2">{{ article.type }}</a>
@@ -196,13 +206,6 @@
                 {#评论#}
                 <div class="news_pl">
                     <h2>文章评论</h2>
-                    {% if messages %}
-                        <script>
-                            {% for msg in messages %}
-                                alert('{{ msg.message }}');
-                            {% endfor %}
-                        </script>
-                    {% endif %}
                     {% if not request.session.user_id %}
                         <h2 class="dlts">请先
                             <a href="{% url 'user:sign_in' %}?next={{ request.path }}" target="_blank">

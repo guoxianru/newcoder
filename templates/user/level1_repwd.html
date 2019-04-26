@@ -10,6 +10,15 @@
 
 {% block main %}
     <article>
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+
         <div class="picsbox">
 
             {#会员侧边栏#}
@@ -17,14 +26,6 @@
             {#会员侧边栏#}
 
             <h3>修改密码</h3>
-            {% if messages %}
-                <script>
-                    {% for msg in messages %}
-                        alert('{{ msg.message }}');
-                    {% endfor %}
-                </script>
-            {% endif %}
-
             <form method="post" enctype="multipart/form-data" action="{% url 'user:repwd' user.id %}">
                 {% csrf_token %}
                 <table>

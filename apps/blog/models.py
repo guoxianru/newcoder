@@ -99,7 +99,7 @@ class Comment(models.Model):
 class Articlecol(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='所属文章')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='所属会员')
-    addtime = models.DateTimeField(auto_now_add=True, verbose_name='收藏时间')
+    addtime = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
 
     class Meta:
         verbose_name = '文章收藏表'
@@ -109,6 +109,7 @@ class Articlecol(models.Model):
         return self.user.nickname
 
 
+# 微信开发
 class WxToken(models.Model):
     token = models.CharField(max_length=200)
     lifetime = models.DateTimeField(default=0)
@@ -121,6 +122,7 @@ class WxToken(models.Model):
             return False
 
 
+# 微信开发
 class JsToken(models.Model):
     token = models.CharField(max_length=200)
     lifetime = models.DateTimeField(default=0)
@@ -131,3 +133,17 @@ class JsToken(models.Model):
             return True
         else:
             return False
+
+
+# 打赏表
+class Reward(models.Model):
+    name = models.CharField(max_length=20)
+    money = models.FloatField(default=0.0)
+    addtime = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
+
+    class Meta:
+        verbose_name = '打赏表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name

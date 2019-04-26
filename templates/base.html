@@ -48,9 +48,9 @@
                 </a>
             </h1>
             <li style="margin-left: -70px"><a href="/">网站首页</a></li>
-            <li><a href="{% url 'blog:article_list' 'type' 1 %}">心情随笔</a></li>
-            <li><a href="{% url 'blog:article_list' 'type' 2 %}">时事点评</a></li>
-            <li><a href="{% url 'blog:article_list' 'type' 3 %}">技术分享</a></li>
+            {% for item in types %}
+                <li><a href="{% url 'blog:article_list' 'type' item.id %}">{{ item.typename }}</a></li>
+            {% endfor %}
             <li><a href="{% url 'blog:time_axis' %}">时间轴</a></li>
             <li><a href="{% url 'blog:about_me' %}">关于我</a></li>
             <li style="margin-right: 40px"><a href="{% url 'blog:leave_msg' %}">留言板</a></li>
@@ -115,6 +115,7 @@
 
 {#内容主体开始#}
 {% block main %}
+
 {% endblock %}
 {#内容主体结束#}
 

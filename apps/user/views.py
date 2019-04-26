@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
@@ -29,6 +31,20 @@ def user_login_req(func):
                 return redirect('/user/sign_in/')
 
     return inner
+
+
+# 验证当前用户权限装饰器
+def user_auth_req(func):
+    def auth(request, *args, **kwargs):
+        user_session = request.session.get('user_id')
+        user_info = re.findall(r'/(\d)/', request.path_info)[0]
+        if int(user_session) == int(user_info):
+            return func(request, *args, **kwargs)
+        else:
+            messages.success(request, '没有访问当前页面权限！！！')
+            return redirect("/user/user/{}/".format(user_session))
+
+    return auth
 
 
 # 注册
@@ -81,8 +97,8 @@ def sign_in(request):
                         response = redirect('/')
                     else:
                         response = redirect(next)
+                    response.set_cookie('username', user.username, 3600)
                     if save:
-                        response.set_cookie('username', user.username)
                         request.session['save'] = 1
                     return response
                 else:
@@ -99,11 +115,14 @@ def sign_in(request):
 def sign_out(request):
     # 清空session存储的数据
     request.session.flush()
+    response = redirect('/')
+    response.delete_cookie('username')
     return redirect('/')
 
 
 # 用户中心
 @user_login_req
+@user_auth_req
 def user(request, uid):
     user = User.objects.get(id=uid)
     if request.method == 'POST':
@@ -177,6 +196,7 @@ def user(request, uid):
 
 # 用户修改密码
 @user_login_req
+@user_auth_req
 def repwd(request, uid):
     user = User.objects.get(id=uid)
     if request.method == 'POST':
@@ -198,6 +218,7 @@ def repwd(request, uid):
 
 # 用户评论记录
 @user_login_req
+@user_auth_req
 def comment(request, uid):
     user = User.objects.get(id=uid)
     comments = Comment.objects.filter(user=user)
@@ -206,6 +227,7 @@ def comment(request, uid):
 
 # 用户删除评论记录
 @user_login_req
+@user_auth_req
 def comment_del(request, cid):
     uid = request.session.get('user_id')
     comment = Comment.objects.get(id=cid)
@@ -215,6 +237,7 @@ def comment_del(request, cid):
 
 # 用户收藏记录
 @user_login_req
+@user_auth_req
 def articlecol(request, uid):
     user = User.objects.get(id=uid)
     articlecols = Articlecol.objects.filter(user=user)
@@ -223,6 +246,7 @@ def articlecol(request, uid):
 
 # 用户删除收藏记录
 @user_login_req
+@user_auth_req
 def articlecol_del(request, cid):
     uid = request.session.get('user_id')
     articlecol = Articlecol.objects.get(id=cid)

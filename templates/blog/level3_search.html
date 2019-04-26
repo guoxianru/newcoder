@@ -20,6 +20,15 @@
 
         {#搜索结果#}
         <div class="blogsbox">
+
+            {% if messages %}
+                <script>
+                    {% for msg in messages %}
+                        alert('{{ msg.message }}');
+                    {% endfor %}
+                </script>
+            {% endif %}
+
             <div class="itemlist">
                 {% for item in articles %}
                     <div class="blogs" data-scroll-reveal="enter bottom over 1s">

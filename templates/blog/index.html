@@ -11,6 +11,15 @@
 
 {% block main %}
     <article>
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+
         {#首页轮播区开始#}
         <div class="picsbox">
             {#轮播开始#}

@@ -15,6 +15,15 @@
     {#背景图#}
 
     <div class="container">
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+
         <h1 class="t_nav">
             <span>像“草根”一样，紧贴着地面，低调的存在，冬去春来，枯荣无恙。</span>
             <a href="/" class="n1">网站首页</a><a class="n2">{{ author.nickname }}</a>

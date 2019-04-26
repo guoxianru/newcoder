@@ -78,3 +78,18 @@ class Articlecoladmin(admin.ModelAdmin):
     ordering = ['-addtime']
     # date_hierarchy 详细时间分层筛选　
     date_hierarchy = 'addtime'
+
+
+@admin.register(Reward)
+class Rewardadmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'money', 'addtime']
+    # list_display_links 设置其他字段也可以点击链接进入编辑界面
+    list_display_links = ['id', 'name']
+    list_per_page = 50
+    list_filter = ['name', 'money']
+    search_fields = ['name', 'money']
+    # list_editable 设置默认可编辑字段
+    list_editable = ['money']
+    ordering = ['-addtime']
+    # date_hierarchy 详细时间分层筛选　
+    date_hierarchy = 'addtime'

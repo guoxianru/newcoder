@@ -10,6 +10,20 @@
             一个90后新码农！入行以来。一直潜心研究Python技术，一边工作一边积累经验，分享一些技术心得和人生感悟。
         </p>
     </div>
+    <div class="tuijian">
+        <h2 class="hometitle">打赏排行</h2>
+        <ul class="sidenews">
+            <p style="color: #9c27b0;margin-bottom: 20px">打赏人
+                <e style="margin-left: 50px">打赏金额</e>
+            </p>
+            {% for item in rewards %}
+                <li>
+                    <span style="color: sandybrown">{{ item.name }}
+                        <e style="margin-left: 60px">¥{{ item.money }}元</e></span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
     <div class="weixin">
         <h2 class="hometitle">微信关注</h2>
         <ul>

@@ -4,6 +4,10 @@ from blog.models import *
 
 
 def recommend(request):
+    # 所有文章分类
+    types = Type.objects.all()
+    # 所有打赏
+    rewards = Reward.objects.all().order_by('-money')[:10]
     # 侧边栏文章
     # 特别推荐，显示前3
     articles_2 = Article.objects.filter(is_recommend=2)[:3]
@@ -30,6 +34,10 @@ def recommend(request):
     # 侧边栏文章
 
     content = {
+        # 所有文章分类
+        'types': types,
+        # 所有打赏
+        'rewards': rewards,
         # 特别推荐，显示前3
         'articles_2': articles_2,
         # 推荐文章，显示前5

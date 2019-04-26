@@ -10,6 +10,15 @@
 
 {% block main %}
     <article>
+
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+
         <div class="news_pl">
             {#会员侧边栏#}
             {% include 'user/level1_user_menu.html' %}
