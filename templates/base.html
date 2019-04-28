@@ -48,9 +48,33 @@
                 </a>
             </h1>
             <li style="margin-left: -70px"><a href="/">网站首页</a></li>
-            {% for item in types %}
-                <li><a href="{% url 'blog:article_list' 'type' item.id %}">{{ item.typename }}</a></li>
-            {% endfor %}
+            <li>
+                <a href="{% url 'blog:article_list' 'type' 1 %}">心情随笔</a>
+                <ul class="sub-nav">
+                    {% for tag in tags_1 %}
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'blog:article_list' 'type' 1 %}">全部</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'blog:article_list' 'type' 2 %}">时事点评</a>
+                <ul class="sub-nav">
+                    {% for tag in tags_2 %}
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'blog:article_list' 'type' 2 %}">全部</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'blog:article_list' 'type' 3 %}">技术分享</a>
+                <ul class="sub-nav">
+                    {% for tag in tags_3 %}
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'blog:article_list' 'type' 3 %}">全部</a></li>
+                </ul>
+            </li>
             <li><a href="{% url 'blog:time_axis' %}">时间轴</a></li>
             <li><a href="{% url 'blog:about_me' %}">关于我</a></li>
             <li style="margin-right: 40px"><a href="{% url 'blog:leave_msg' %}">留言板</a></li>
@@ -88,11 +112,35 @@
         <h2><a href="/" class="mlogo">新码农博客</a><span class="navicon"></span></h2>
         <dl class="list_dl">
             <dt class="list_dt"><a href="/">网站首页</a></dt>
-            <dt class="list_dt"><a href="{% url 'blog:article_list' 'type' 1 %}">心情随笔</a></dt>
-            <dt class="list_dt"><a href="{% url 'blog:article_list' 'type' 2 %}">时事点评</a></dt>
-            <dt class="list_dd"><a href="{% url 'blog:article_list' 'type' 3 %}">技术分享</a></dt>
+            <dt class="list_dt"><a href="#">心情随笔</a></dt>
+            <dd class="list_dd">
+                <ul>
+                    {% for tag in tags_1 %}
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'blog:article_list' 'type' 1 %}">全部</a></li>
+                </ul>
+            </dd>
+            <dt class="list_dt"><a href="#">时事点评</a></dt>
+            <dd class="list_dd">
+                <ul>
+                    {% for tag in tags_2 %}
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'blog:article_list' 'type' 2 %}">全部</a></li>
+                </ul>
+            </dd>
+            <dt class="list_dt"><a href="#">技术分享</a></dt>
+            <dd class="list_dd">
+                <ul>
+                    {% for tag in tags_3 %}
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                    {% endfor %}
+                    <li><a href="{% url 'blog:article_list' 'type' 3 %}">全部</a></li>
+                </ul>
+            </dd>
             <dt class="list_dt"><a href="{% url 'blog:time_axis' %}">时间轴</a></dt>
-            <dt class="list_dd"><a href="{% url 'blog:about_me' %}">关于我</a></dt>
+            <dt class="list_dt"><a href="{% url 'blog:about_me' %}">关于我</a></dt>
             <dt class="list_dt"><a href="{% url 'blog:leave_msg' %}">留言板</a></dt>
             {% if not request.session.user_id %}
                 <dt class="list_dt"><a href="{% url 'user:sign_up' %}">注册</a></dt>

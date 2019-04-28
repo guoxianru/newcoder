@@ -33,6 +33,7 @@ class Type(models.Model):
 class Tag(models.Model):
     tagname = models.CharField(max_length=20, unique=True, verbose_name='标签名称')
     label = models.CharField(max_length=255, verbose_name='标签简介')
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, verbose_name='标签分类')
     addtime = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
 
     class Meta:
@@ -41,15 +42,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.tagname
-
-
-'''
-随手记 - 记录生活点点滴滴。
-人生感悟 - 人只要不失去方向，就不会失去自己。
-Python - Python，绵薄技术，与君共勉。
-Ubuntu - Ubuntu，绵薄技术，与君共勉。
-MySQL - MySQL，绵薄技术，与君共勉。
-'''
 
 
 # 文章表

@@ -6,6 +6,12 @@ from blog.models import *
 def recommend(request):
     # 所有文章分类
     types = Type.objects.all()
+    # 心情随笔标签
+    tags_1 = Tag.objects.filter(type_id=1).order_by('-addtime')[:5]
+    # 时事点评标签
+    tags_2 = Tag.objects.filter(type_id=2).order_by('-addtime')[:5]
+    # 技术分享标签
+    tags_3 = Tag.objects.filter(type_id=3).order_by('-addtime')[:5]
     # 所有打赏
     rewards = Reward.objects.all().order_by('-money')[:10]
     # 侧边栏文章
@@ -36,6 +42,12 @@ def recommend(request):
     content = {
         # 所有文章分类
         'types': types,
+        # 心情随笔标签
+        'tags_1': tags_1,
+        # 时事点评标签
+        'tags_2': tags_2,
+        # 技术分享标签
+        'tags_3': tags_3,
         # 所有打赏
         'rewards': rewards,
         # 特别推荐，显示前3

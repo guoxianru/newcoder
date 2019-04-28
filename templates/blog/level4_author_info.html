@@ -32,6 +32,8 @@
             <ul>
                 <h2>关于作者</h2>
                 <br/>
+                <p><img src="{% static author.photo.name %}" title="{{ author.nickname }}"
+                        style="width: 50px;height: 50px"></p>
                 <p>昵称：{{ author.nickname }}</p>
                 <p>生日：{{ author.birthday }}</p>
                 <p>性别：{{ author.get_gender_display }}</p>

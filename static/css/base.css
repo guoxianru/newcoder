@@ -12,6 +12,12 @@ body {
     line-height: 1.5;
 }
 
+.searchbox {
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
 img {
     border: 0;
     display: block

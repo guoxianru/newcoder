@@ -23,12 +23,12 @@ class Typeadmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class Tagadmin(admin.ModelAdmin):
-    list_display = ['id', 'tagname', 'label', 'addtime']
+    list_display = ['id', 'tagname', 'label', 'type', 'addtime']
     list_per_page = 50
-    list_filter = ['tagname']
-    search_fields = ['tagname']
+    list_filter = ['tagname', 'type']
+    search_fields = ['tagname', 'type']
     # list_editable 设置默认可编辑字段
-    list_editable = ['tagname', 'label']
+    list_editable = ['tagname', 'type', 'label']
     ordering = ['-addtime']
     # date_hierarchy 详细时间分层筛选　
     date_hierarchy = 'addtime'
