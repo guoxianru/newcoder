@@ -32,10 +32,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
-
 AUTH_USER_MODEL = 'user.User'
 
 # Application definition
@@ -80,7 +76,7 @@ TEMPLATES = [
                 # 侧边栏推荐文章
                 'blog.global_tuijian.recommend',
                 # 微信
-                # 'blog.wx_token.getSignPackage'
+                'blog.wx_token.getSignPackage'
             ],
         },
     },
