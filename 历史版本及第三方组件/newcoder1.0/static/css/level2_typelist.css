@@ -1,0 +1,89 @@
+.main {
+    background: #e9eaec;
+}
+
+.itemlist {
+    width: 1300px;
+    background: #e9eaec;
+    float: left;
+}
+
+.itemlist h1 {
+    width: 1290px;
+    padding-left: 10px;
+    height: 50px;
+    line-height: 50px;
+    color: #0c5a82;
+    border-bottom: 1px solid #4f504b;
+}
+
+.itemlist dt {
+    float: left;
+    clear: both;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.itemlist dt img {
+    width: 500px;
+    height: 300px;
+}
+
+.itemlist dd {
+    float: left;
+    margin-left: 20px;
+    width: 700px;
+}
+
+.itemlist dd h2 {
+    margin-top: 80px;
+}
+
+.itemlist dd h2 a {
+    font-size: 24px;
+}
+
+.itemlist dd p {
+    margin-top: 30px;
+}
+
+.itemlist dd p a{
+    color: #0c5a82;
+}
+
+.itemlist dd p a:hover{
+    border-bottom: 3px solid #db0010;
+}
+
+.itemlist dd img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.pageniu {
+    width: 100%;
+    text-align: center;
+}
+
+.pageniu .ye {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    background: #008df3;
+    border: none;
+    color: white;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.pageniu .shu {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    background: #008df3;
+    border: none;
+    color: white;
+    font-size: 16px;
+    line-height: 20px;
+}

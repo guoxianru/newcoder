@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load myfilter %}
+
+{% block title %}
+    新码农-发表文章
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/level3_addarticle.css">
+{% endblock %}
+
+{% block main %}
+    <form action="/blog/addarticle/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>文章标题
+            <input type="text" name="title" value="{{ data.title }}" class="title">
+            <span>{{ errors.title.0 }}</span>
+        </p>
+        <p>文章类型
+            <select name="type">
+                {% for type in types %}
+                    <option value="{{ type.id }}">{{ type.typename }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>文章配图
+            <input type="file" name="pic" class="pic">
+            <span>{{ errors.pic.0 }}</span>
+        </p>
+        <p><label>文章内容</label></p>
+        <div data-model-name="content" class="contents">
+            {{ form.media }}
+            {{ form }}
+        </div>
+        <span style="margin-left: 300px">{{ errors.content.0 }}</span>
+        <p><input type="submit" value="发表文章" class="add"></p>
+    </form>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load myfilter %}
+
+{% block title %}
+    新码农-用户信息
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/level1_userinfo.css">
+{% endblock %}
+
+{% block main %}
+    <table width="100%">
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>昵称</th>
+            <th>头像</th>
+            <th>手机号</th>
+            <th>邮箱</th>
+            <th>个人简介</th>
+            <th>注册日期</th>
+        </tr>
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.nickname }}</td>
+            <td><img src="/static/{{ user.photo }}" width="50" height="50"></td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.desc }}</td>
+            <td>{{ user.date }}</td>
+        </tr>
+    </table>
+{% endblock %}

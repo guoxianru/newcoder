@@ -1,0 +1,79 @@
+.main {
+    background: #e9eaec;
+    height: 590px;
+}
+
+.signup {
+    width: 1000px;
+    height: 550px;
+    background: #ffffff;
+    position: relative;
+    top: 20px;
+    left: 150px
+}
+
+.signup h2 {
+    width: 1000px;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #333333;
+}
+
+.signup h2 span {
+    margin-left: 20px;
+    font-size: 20px;
+    display: inline-block;
+    width: 240px;
+    border-bottom: 3px solid #008df3;
+}
+
+.signup h2 a {
+    margin-left: 600px;
+    font-size: 13px;
+    color: #008df3;
+    font-weight: normal
+}
+
+.signup form {
+    margin-top: 30px
+}
+
+.signup input {
+    display: block;
+    width: 400px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 300px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #008df3
+}
+
+.signup form span {
+    display: inline-block;
+    width: 400px;
+    height: 50px;
+    margin-left: 300px;
+    margin-top: 10px;
+    border: 1px solid #008df3
+}
+
+.signup span input {
+    margin-left: 0;
+    margin-top: 0;
+    opacity: 0
+}
+
+.signup .user_photo {
+    position: relative;
+    top: 15px;
+    left: 170px;
+    font-weight: normal;
+    color: #6e6d6d
+}
+
+.signup .signup_niu {
+    background-color: #008df3;
+    border: none;
+    color: #d6ffff
+}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load myfilter %}
+
+{% block title %}
+    新码农-{{ article.title }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/level3_article.css">
+{% endblock %}
+
+{% block main %}
+    <h1>{{ article.title }}<a href="/blog/typelist/{{ article.type.id }}/">{{ article.type.typename }}>></a></h1>
+    <p class="middle">
+        作者：<a
+            href="/blog/userinfo/{{ article.author.id }}/">{{ article.author.nickname }}</a>&nbsp;&nbsp;作者文章：{{ count }}篇&nbsp;&nbsp;最新文章：<a
+            href="/blog/article/{{ tid }}/">{{ title }}</a>
+    </p>
+    <p class="middle">
+        <span>发表时间：{{ article.date }}</span>&nbsp;&nbsp;
+        <span>浏览：{{ article.count }}</span>&nbsp;&nbsp;
+        <span>评论：{{ article.comment_set.all.count }}</span>&nbsp;&nbsp;
+        <span>点赞：{{ article.like }}</span>
+    </p>
+    <img src="/static/{{ article.pic }}" class="pic">
+    <div class="content">
+        {% autoescape off %}
+            {{ article.content }}
+        {% endautoescape %}
+    </div>
+    <input type="button" value="{{ article.like }}" class="like_button" id="{{ article.id }}">
+    <p class="underline"><span>说点什么：</span></p>
+    <!--发布评论-->
+    <form method="post" action="/blog/comment/{{ article.id }}/">
+        {% csrf_token %}
+        <textarea name="content" class="textarea"></textarea>
+        <input type="submit" value="发布" class="fabu">
+    </form>
+    <!--评论列表-->
+    <h2>评论列表：</h2>
+    <div class="fu_comment">
+        {% for comment in comments %}
+            <p>
+                <img src="/static/{{ comment.author.photo }}">&nbsp;&nbsp;
+                <a href="/blog/userinfo/{{ comment.author.id }}/">{{ comment.author.nickname }}</a>&nbsp;&nbsp;
+                <span>{{ comment.date | mytime }}发布</span>
+            </p>
+            <p class="hfnr">评论内容：{{ comment.content }}</p>
+            <!--子评论列表-->
+            {% for child in comment.comment_set.all reversed %}
+                <div class="zi_comment">
+                    <p>
+                        <img src="/static/{{ child.author.photo }}">&nbsp;&nbsp;
+                        <a href="/blog/userinfo/{{ child.author.id }}/">{{ child.author.nickname }}</a>&nbsp;&nbsp;
+                        <span>{{ child.date|mytime }}发布</span>
+                    </p>
+                    <p class="hfnr">评论内容：{{ child.content }}</p>
+                </div>
+            {% endfor %}
+            <!--我要点评部分-->
+            <div class="wydp">
+                <input type="button" value="点评" class="button_reply">
+                <div class="reply">
+                    <form action="/blog/comment/{{ article.id }}/{{ comment.id }}/" method="post">
+                        {% csrf_token %}
+                        <textarea name="content" class="textarea1"></textarea>
+                        <input type="submit" value="发布" class="fabu1">
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript" src="/static/js/jquery-3.3.1.js"></script>
+    <script>
+        $(".like_button").click(function () {
+            var id = $(this).attr("id");  //改动值$(this)代表的是当前被点击的按钮
+            {#var like = $(this).val();  //获取当前按钮input的值,值是字符串,需要转换值类型#}
+            {#$(this).val(parseInt(like) + 1);  //把新的值赋值给当前的input按钮#}
+            var that = this;  //this在不同的函数中代表不同的对象,因此如果内置函数要使用外部函数的this,要先复制一个其他值
+            $.get("/blog/likes/" + id + "/", function (data) {
+                $(that).val(data)
+            });
+        });
+        $(".button_reply").click(function () {
+            //要判断一下状态,是否是隐藏
+            if ($(this).next().is(":hidden")) {
+                //展示隐藏的文本域
+                $(this).next().show()
+            }
+            else {
+                //隐藏文本域
+                $(this).next().hide()
+            }
+        });
+    </script>
+{% endblock %}

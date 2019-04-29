@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load myfilter %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link rel="icon" href="/static/img/logo_icon_.bmp" type="image/x-icon">
+    {#标题栏显示图标#}
+    <link rel="shortcut icon" href="/static/img/logo_icon_.bmp" type="image/x-icon">
+    {#收藏夹显示图标#}
+    <link href="/static/css/base.css" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body style="width: 100%;height: 100%;background:#000000">
+{#画板背景开始#}
+{#<canvas width="1519" height="29999" id="canvas0" style="background:#000000; position: fixed; z-index: -1"></canvas>#}
+{#<script>#}
+{#    var canvas = document.getElementById("canvas0");#}
+{#    var ctx = canvas.getContext("2d");#}
+{#    var screenInformation = window.screen;#}
+{#    var fontSize = 20;#}
+{#    var str = "01";#}
+{#    var cols = Math.floor((screenInformation.width) / fontSize);#}
+{#    var X = [];#}
+{#    for (var i = 0; i < cols; i++) {#}
+{#        X.push(0);#}
+{#    }#}
+{#    var gradient = ctx.createLinearGradient(0, 0, screenInformation.width, screenInformation.height);#}
+{#    gradient.addColorStop("0", "#ff0099");#}
+{#    gradient.addColorStop("0.25", "#00ccff");#}
+{#    gradient.addColorStop("0.5", "#ffff00");#}
+{#    gradient.addColorStop("0.75", "#cc66cc");#}
+{#    gradient.addColorStop("0.1", "#00ccff");#}
+{##}
+{#    function matrix() {#}
+{#        ctx.fillStyle = "rgba(0,0,0,0.02)";#}
+{#        ctx.fillRect(0, 0, canvas.width, canvas.height);#}
+{#        ctx.fillStyle = gradient;#}
+{#        for (var i = 0; i < cols; i++) {#}
+{#            var y = X[i] * fontSize;#}
+{#            ctx.fillText(str[Math.floor(Math.random() * str.length)], i * fontSize, y);#}
+{#            if (y >= screenInformation.height && Math.random() > 0.99) {#}
+{#                X[i] = 0;#}
+{#            }#}
+{#            X[i]++;#}
+{#        }#}
+{#    }#}
+{##}
+{#    setInterval(matrix, 30);#}
+{#</script>#}
+{#画板背景结束#}
+
+{#网页主体开始#}
+<div class="body">
+
+    {#网页头部开始#}
+    <div class="header">
+        <a href="/"><img src="/static/img/logo_index.jpg" class="logo"></a>
+        <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/blog/typelist/1/">心情随笔</a></li>
+            <li><a href="/blog/typelist/2/">时事热点</a></li>
+            <li><a href="/blog/typelist/3/">技术分享</a></li>
+            <li><a href="/blog/myblurb/">关于我</a></li>
+            {% if not request.session.user_id %}
+                <li style="margin-left: 200px">
+                    <a href="/blog/login/">登陆</a>
+                </li>
+                <li style="margin-left: 50px">
+                    <a href="/blog/signup/">注册</a>
+                </li>
+            {% else %}
+                <li style="margin-left: 150px">
+                    <img src="/static/{{ request.session.user_photo }}" class="user_photo">
+                </li>
+                <li style="margin-left: 20px">
+                    <a href="/blog/userinfo/{{ request.session.user_id }}/">{{ request.session.user_username | slice:'6' }}</a>
+                </li>
+                <li style="margin-left: 20px">
+                    <a href="/blog/addarticle/">投稿</a>
+                </li>
+                <li style="margin-left: 20px">
+                    <a href="/blog/logout/">注销</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    {#网页头部结束#}
+
+    {#内容主体开始#}
+    <div class="main">
+        {% block main %}
+
+        {% endblock %}
+    </div>
+    {#内容主体结束#}
+
+    {#网页底部开始#}
+    <div class="footer">
+        <dl>
+            <dt><a href="/"><img src="/static/img/logo_index.jpg"></a></dt>
+            <dd>
+                <p class="you">友站链接：<a href="http://47.107.95.0:8888">盗版虎嗅</a></p>
+                <p class="bei">
+                    Copyright &copy; 2018 |
+                    <a href="http://newcoder.top/admin">All Rights Reserved</a> |
+                    <a href="http://newcoder.top">newcoder.top</a> |
+                    <a href="http://www.miitbeian.gov.cn/">冀ICP备18036301号</a> |
+                    <a href="http://www.beian.gov.cn/">京公网安备88888888号</a>
+                </p>
+                <p></p>
+            </dd>
+        </dl>
+    </div>
+    {#网页底部结束#}
+
+</div>
+{#网页主体结束#}
+</body>
+</html>

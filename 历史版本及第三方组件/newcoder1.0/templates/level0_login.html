@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load myfilter %}
+
+{% block title %}
+    新码农-登陆
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/level0_login.css">
+{% endblock %}
+
+{% block main %}
+    <div class="login">
+        <h2>
+            <p><span>账号密码登陆</span><a href="/blog/signup">注册新用户</a></p>
+        </h2>
+        <form method="post" action="/blog/login/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <span style="margin-left: 170px;color: red">{{ msg }}</span>
+            <input type="text" placeholder="请输入用户名" name="username" value="{{ username }}" class="input" required>
+            <span style="margin-left: 180px;color: red">{{ errors.username.0 }}</span>
+            <input type="password" placeholder="请输入密码" name="password" value="{{ data.password }}" class="input" required>
+            <span style="margin-left: 180px;color: red">{{ errors.password.0 }}</span><br/>
+            <input type="checkbox" name="save" value="1" class="checkbox" {% if username %}checked{% endif %}>记住用户名
+            <input type="submit" value="登陆" class="login_niu">
+        </form>
+    </div>
+{% endblock %}

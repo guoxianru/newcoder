@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load myfilter %}
+
+{% block title %}
+    新码农-首页
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+
+{% block main %}
+    {#内容左主体开始#}
+    <div class="left">
+        <h1>最新文章</h1>
+        <div class="itemlist">
+            {% for item in list %}
+                <dl>
+                    <dt>
+                        <a href="/blog/article/{{ item.id }}/">
+                            <img src="/static/{{ item.pic }}">
+                        </a>
+                    </dt>
+                    <dd>
+                        <h2><a href="/blog/article/{{ item.id }}/">{{ item.title }}</a></h2>
+                        <p>
+                            <img src="/static/{{ item.author.photo.name }}">&nbsp;&nbsp;
+                            <a href="/blog/userinfo/{{ item.author.id }}/">{{ item.author.nickname }}</a>&nbsp;&nbsp;
+                            <span>{{ item.date | mytime }}发布</span>&nbsp;&nbsp;
+                            <span>浏览：{{ item.count }}</span>&nbsp;&nbsp;
+                            <span>评论：{{ item.comment_set.all.count }}</span>&nbsp;&nbsp;
+                            <span>点赞：{{ item.like }}</span>&nbsp;&nbsp;
+                            <a href="/blog/typelist/{{ item.type.id }}/">{{ item.type.typename }}>></a>
+                        </p>
+                    </dd>
+                </dl>
+            {% empty %}
+                <h1>系统在维护中，请下次访问</h1>
+            {% endfor %}
+        </div>
+        <p><input type="button" value="点击加载更多" class="more"></p>
+    </div>
+    {#内容左主体结束#}
+
+    {#内容右主体开始#}
+    <div class="right">
+        <h3>热门榜</h3>
+        {% for hot in hotlist %}
+            <dl>
+                <dt>
+                    <a href="/blog/article/{{ hot.id }}/">
+                        <img src="/static/{{ hot.pic }}">
+                    </a>
+                </dt>
+                <dd>
+                    <p>
+                        <a href="/blog/article/{{ hot.id }}/">{{ hot.title }}</a>
+                        <span>浏览：{{ hot.count }}</span>
+                    </p>
+                </dd>
+            </dl>
+        {% endfor %}
+    </div>
+    {#内容右主体结束#}
+
+    <script src="/static/js/jquery-3.3.1.js"></script>
+    <script>
+        var pageNum = 0;//如果是第一页就是0
+        //注册more点击监听器
+        $(".more").click(function () {
+            pageNum++;
+            //向服务器发送加载更多请求,jquery封装的ajax
+            $.get("/blog/more/" + pageNum + "/", function (data) {
+                //根据返回的数据,判断是否为空,为空就alert()
+                if (data == "empty") {
+                    alert("内容已加载完毕!");
+                } else {
+                    //不为空,展示出来返回的html字符串
+                    $(".itemlist").append(data);
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load myfilter %}
+
+{% block title %}
+    新码农-注册
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/css/level0_signup.css">
+{% endblock %}
+
+{% block main %}
+    <div class="signup">
+        <h2>
+            <p><span>注册新码农，让编程更简单</span><a href="/blog/login/">使用已有账号登陆</a></p>
+        </h2>
+        <form method="post" action="/blog/signup/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p style="margin-left: 450px;color: red">{{ msg }}</p>
+            <input type="text" placeholder="请输入用户名" name="username" value="{{ data.username }}">
+            <p style="margin-left: 450px;color: red">{{ errors.username.0 }}</p>
+            <input type="text" placeholder="请输入昵称" name="nickname" value="{{ data.nickname }}">
+            <p style="margin-left: 450px;color: red">{{ errors.nickname.0 }}</p>
+            <input type="password" placeholder="请输入密码" name="password" value="{{ data.password }}">
+            <p style="margin-left: 450px;color: red">{{ errors.password.0 }}</p>
+            <input type="password" placeholder="请再次输入密码" name="password1">
+            <p style="margin-left: 450px;color: red">{{ errors.password.0 }}</p>
+            <span>
+                <b class="user_photo">头像上传</b>
+                <input type="file" name="photo">
+            </span>
+            <p style="margin-left: 450px;color: red">{{ errors.photo.0 }}</p>
+            <input type="submit" value="注册账号" class="signup_niu">
+        </form>
+    </div>
+{% endblock %}
