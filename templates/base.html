@@ -15,12 +15,6 @@
     <meta name="keywords" content="新码农,个人博客,技术分享"/>
     <meta name="description" content="新码农博客，是一个站在Python全栈开发之路的程序员个人网站。"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {#百度验证#}
-    <meta name="baidu-site-verification" content="0QwTy6Ga5W" />
-    {#百度验证#}
-    {#360验证#}
-    <meta name="360-site-verification" content="c9f567294481e8a370740518e910e408"/>
-    {#360验证#}
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     <link href="{% static 'css/index.css' %}" rel="stylesheet">
     <link href="{% static 'css/m.css' %}" rel="stylesheet">
@@ -38,6 +32,36 @@
     {% block css %}
     {% endblock %}
     {#其他css、js文件#}
+
+    {#百度验证#}
+    <meta name="baidu-site-verification" content="EQthgGmrll"/>
+    {#百度验证#}
+    {#360验证#}
+    <meta name="360-site-verification" content="c9f567294481e8a370740518e910e408"/>
+    {#360验证#}
+    {#百度自动推送#}
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            } else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+    {#百度自动推送#}
+    {#360自动推送#}
+    <script>
+        (function () {
+            var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?30525ee6206f84c31fb1000414bb6ceb" : "https://jspassport.ssl.qhimg.com/11.0.1.js?30525ee6206f84c31fb1000414bb6ceb";
+            document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+    {#360自动推送#}
 
 </head>
 <body>

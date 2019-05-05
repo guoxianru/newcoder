@@ -116,18 +116,18 @@
 
     {#首页加载更多ajax#}
     <script>
-        //如果是第一页就是0
+        {#如果是第一页就是0#}
         var pagenum = 0;
-        //注册more点击监听器
+        {#注册more点击监听器#}
         $(".more").click(function () {
             pagenum++;
-            //向服务器发送加载更多请求,jquery封装的ajax
+            {#向服务器发送加载更多请求,jquery封装的ajax#}
             $.get("/blog/more/" + pagenum + "/", function (data) {
-                //根据返回的数据,判断是否为空,为空就alert()
+                {#根据返回的数据,判断是否为空,为空就alert()#}
                 if (data == "empty") {
                     alert("所有文章已加载完毕!");
                 } else {
-                    //不为空,展示出来返回的html字符串
+                    {#不为空,展示出来返回的html字符串#}
                     $(".itemlist").append(data);
                 }
             });
