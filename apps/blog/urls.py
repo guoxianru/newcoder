@@ -21,10 +21,10 @@ urlpatterns = [
     # 首页加载更多
     path("more/<int:pagenum>/", views.more, name='more'),
     # 文章列表
-    path('article_list/<str:key>/<int:tid>/', views.article_list, name='article_list'),
-    path('article_list/<str:key>/<int:tid>/<int:num>/', views.article_list, name='article_list'),
+    path('article_list/<str:key>/<str:unique_id>/', views.article_list, name='article_list'),
+    path('article_list/<str:key>/<str:unique_id>/<int:num>/', views.article_list, name='article_list'),
     # 文章详情
-    path('article_detail/<int:aid>/', views.article_detail, name='article_detail'),
+    path('article_detail/<str:unique_id>/', views.article_detail, name='article_detail'),
     # 时间轴
     path('time_axis/', views.time_axis, name='time_axis'),
     # 关于我
@@ -34,8 +34,8 @@ urlpatterns = [
     # 点赞
     path('like/<int:id>/', views.like, name='like'),
     # 评论
-    path("comment/<int:aid>/", views.comment, name='comment'),
-    path("comment/<int:aid>/<int:pid>/", views.comment, name='comment'),
+    path("comment/<str:unique_id>/", views.comment, name='comment'),
+    path("comment/<str:unique_id>/<int:pid>/", views.comment, name='comment'),
     # 收藏
     path("article_col/<int:aid>/", views.article_col, name='article_col'),
     # 留言
@@ -43,5 +43,5 @@ urlpatterns = [
     # 搜索
     path("search/", views.search, name='search'),
     # 作者信息
-    path("author_info/<int:aid>/", views.author_info, name='author_info'),
+    path("author_info/<str:unique_id>/", views.author_info, name='author_info'),
 ]

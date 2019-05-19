@@ -14885,7 +14885,7 @@ UE.plugins['pasteplain'] = function(){
  * @since 1.2.6.1
  */
 
-UE.plugins['list'] = function () {
+UE.plugins['requirements.txt'] = function () {
     var me = this,
         notExchange = {
             'TD':1,
@@ -14997,7 +14997,7 @@ UE.plugins['list'] = function () {
         customCss.push('.list-paddingleft-2{padding-left:'+me.options.listDefaultPaddingLeft+'px}');
         customCss.push('.list-paddingleft-3{padding-left:'+me.options.listDefaultPaddingLeft*2+'px}');
         //如果不给宽度会在自定应样式里出现滚动条
-        utils.cssRule('list', 'ol,ul{margin:0;pading:0;'+(browser.ie ? '' : 'width:95%')+'}li{clear:both;}'+customCss.join('\n'), me.document);
+        utils.cssRule('requirements.txt', 'ol,ul{margin:0;pading:0;'+(browser.ie ? '' : 'width:95%')+'}li{clear:both;}'+customCss.join('\n'), me.document);
     });
     //单独处理剪切的问题
     me.ready(function(){
@@ -23183,7 +23183,7 @@ UE.plugins['catchremoteimage'] = function () {
                     }
 
                     /* 获取源路径和新路径 */
-                    var i, j, ci, cj, oldSrc, newSrc, list = info.list;
+                    var i, j, ci, cj, oldSrc, newSrc, list = info.requirements;
 
                     for (i = 0; ci = imgs[i++];) {
                         oldSrc = ci.getAttribute("_src") || ci.src || "";
@@ -26721,7 +26721,7 @@ UE.ui = baidu.editor.ui = {};
             }
             this.popup = new Menu({
                 items: this.items,
-                uiName: 'list',
+                uiName: 'requirements.txt',
                 editor:this.editor,
                 captureWheel: true,
                 combox: this

@@ -196,7 +196,7 @@
             this.list = document.createElement('ul');
             this.clearFloat = document.createElement('li');
 
-            domUtils.addClass(this.list, 'list');
+            domUtils.addClass(this.list, 'requirements.txt');
             domUtils.addClass(this.clearFloat, 'clearFloat');
 
             this.list.id = 'imageListUl';
@@ -271,8 +271,8 @@
                         try {
                             var json = isJsonp ? r:eval('(' + r.responseText + ')');
                             if (json.state == 'SUCCESS') {
-                                _this.pushData(json.list);
-                                _this.listIndex = parseInt(json.start) + parseInt(json.list.length);
+                                _this.pushData(json.requirements);
+                                _this.listIndex = parseInt(json.start) + parseInt(json.requirements.length);
                                 if(_this.listIndex >= json.total) {
                                     _this.listEnd = true;
                                 }

@@ -1,5 +1,3 @@
-import re
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password, check_password
@@ -33,12 +31,12 @@ def user_login_req(func):
     return inner
 
 
-# 验证当前用户权限装饰器
+# 验证当前用户权限装饰器，当前用户只能操作自己信息
 def user_auth_req(func):
     def auth(request, *args, **kwargs):
         user_session = request.session.get('user_id')
-        user_info = re.findall(r'/(\d)/', request.path_info)[0]
-        if int(user_session) == int(user_info):
+        user_info = request.path[-9:-1]
+        if user_session == user_info:
             return func(request, *args, **kwargs)
         else:
             messages.success(request, '没有访问当前页面权限！！！')
@@ -89,7 +87,7 @@ def sign_in(request):
                 Q(username=f.cleaned_data['username']) | Q(phone=f.cleaned_data['username'])).first()
             if user:
                 if check_password(f.cleaned_data['password'], user.password):
-                    request.session['user_id'] = user.id
+                    request.session['user_id'] = user.unique_id
                     request.session['user_username'] = user.nickname
                     request.session['user_photo'] = user.photo.name
                     request.session['save'] = 0
@@ -115,6 +113,7 @@ def sign_in(request):
 def sign_out(request):
     # 清空session存储的数据
     request.session.flush()
+    # 清空cookie存储的数据
     response = redirect('/')
     response.delete_cookie('username')
     return redirect('/')
@@ -123,8 +122,9 @@ def sign_out(request):
 # 用户中心
 @user_login_req
 @user_auth_req
-def user(request, uid):
-    user = User.objects.get(id=uid)
+def user(request, unique_id):
+    user = User.objects.get(unique_id=unique_id)
+    uid = user.id
     if request.method == 'POST':
         # 昵称修改
         nickname = request.POST.get('nickname', '')
@@ -133,7 +133,7 @@ def user(request, uid):
         else:
             if User.objects.filter(nickname=nickname).count() > 0:
                 messages.success(request, '昵称已被使用')
-                return redirect("/user/user/{}/".format(uid))
+                return redirect("/user/user/{}/".format(unique_id))
             else:
                 user.nickname = nickname
                 user.save()
@@ -167,7 +167,7 @@ def user(request, uid):
         else:
             if User.objects.filter(phone=phone).count() > 0:
                 messages.success(request, '手机号已被使用')
-                return redirect("/user/user/{}/".format(uid))
+                return redirect("/user/user/{}/".format(unique_id))
             else:
                 user.phone = phone
                 user.save()
@@ -178,7 +178,7 @@ def user(request, uid):
         else:
             if User.objects.filter(email=email).count() > 0:
                 messages.success(request, '邮箱已被使用')
-                return redirect("/user/user/{}/".format(uid))
+                return redirect("/user/user/{}/".format(unique_id))
             else:
                 user.email = email
                 user.save()
@@ -190,15 +190,15 @@ def user(request, uid):
             user.desc = desc
             user.save()
         messages.success(request, '成功保存')
-        return redirect("/user/user/{}/".format(uid))
+        return redirect("/user/user/{}/".format(unique_id))
     return render(request, "user/level1_user.html", locals())
 
 
 # 用户修改密码
 @user_login_req
 @user_auth_req
-def repwd(request, uid):
-    user = User.objects.get(id=uid)
+def repwd(request, unique_id):
+    user = User.objects.get(unique_id=unique_id)
     if request.method == 'POST':
         password_old = request.POST.get('password_old', '')
         password_new = request.POST.get('password_new', '')
@@ -208,7 +208,7 @@ def repwd(request, uid):
                 user.password = make_password(password_new)
                 user.save()
                 messages.success(request, '修改成功')
-                return redirect("/user/repwd/{}/".format(uid))
+                return redirect("/user/repwd/{}/".format(unique_id))
             else:
                 messages.success(request, '两次密码不一致')
         else:
@@ -219,8 +219,8 @@ def repwd(request, uid):
 # 用户评论记录
 @user_login_req
 @user_auth_req
-def comment(request, uid):
-    user = User.objects.get(id=uid)
+def comment(request, unique_id):
+    user = User.objects.get(unique_id=unique_id)
     comments = Comment.objects.filter(user=user)
     return render(request, 'user/level1_comment.html', locals())
 
@@ -228,9 +228,9 @@ def comment(request, uid):
 # 用户删除评论记录
 @user_login_req
 @user_auth_req
-def comment_del(request, cid):
+def comment_del(request, unique_id):
     uid = request.session.get('user_id')
-    comment = Comment.objects.get(id=cid)
+    comment = Comment.objects.get(unique_id=unique_id)
     comment.delete()
     return redirect("/user/comment/{}/".format(uid))
 
@@ -238,8 +238,8 @@ def comment_del(request, cid):
 # 用户收藏记录
 @user_login_req
 @user_auth_req
-def articlecol(request, uid):
-    user = User.objects.get(id=uid)
+def articlecol(request, unique_id):
+    user = User.objects.get(unique_id=unique_id)
     articlecols = Articlecol.objects.filter(user=user)
     return render(request, 'user/level1_articlecol.html', locals())
 
@@ -247,8 +247,8 @@ def articlecol(request, uid):
 # 用户删除收藏记录
 @user_login_req
 @user_auth_req
-def articlecol_del(request, cid):
+def articlecol_del(request, unique_id):
     uid = request.session.get('user_id')
-    articlecol = Articlecol.objects.get(id=cid)
+    articlecol = Articlecol.objects.get(unique_id=unique_id)
     articlecol.delete()
     return redirect("/user/articlecol/{}/".format(uid))

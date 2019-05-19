@@ -4,17 +4,17 @@ from blog.models import *
 
 
 def recommend(request):
-    # 所有文章分类
-    types = Type.objects.all()
-    # 心情随笔标签
+    # 心情随笔
+    type_1 = Type.objects.get(id=1)
     tags_1 = Tag.objects.filter(type_id=1).order_by('-addtime')[:5]
-    # 时事点评标签
+    # 时事点评
+    type_2 = Type.objects.get(id=2)
     tags_2 = Tag.objects.filter(type_id=2).order_by('-addtime')[:5]
-    # 技术分享标签
+    # 技术分享
+    type_3 = Type.objects.get(id=3)
     tags_3 = Tag.objects.filter(type_id=3).order_by('-addtime')[:5]
     # 所有打赏
     rewards = Reward.objects.all().order_by('-money')[:10]
-    # 侧边栏文章
     # 特别推荐，显示前3
     articles_2 = Article.objects.filter(is_recommend=2)[:3]
     # 推荐文章，显示前5
@@ -36,17 +36,18 @@ def recommend(request):
         articles_count_1 = []
         articles_count = articles_count[1:5]
     # 标签云，显示前20
-    tags = Tag.objects.all()[:20]
-    # 侧边栏文章
+    tags = Tag.objects.all()
 
+    # 以键值对形式传递参数
     content = {
-        # 所有文章分类
-        'types': types,
-        # 心情随笔标签
+        # 心情随笔
+        'type_1': type_1,
         'tags_1': tags_1,
-        # 时事点评标签
+        # 时事点评
+        'type_2': type_2,
         'tags_2': tags_2,
-        # 技术分享标签
+        # 技术分享
+        'type_3': type_3,
         'tags_3': tags_3,
         # 所有打赏
         'rewards': rewards,
@@ -60,7 +61,7 @@ def recommend(request):
         'articles_count': articles_count,
         # 点击排行第一位
         'articles_count_1': articles_count_1,
-        # 标签云，显示前20
+        # 标签云，显示所有标签
         'tags': tags
     }
     return content

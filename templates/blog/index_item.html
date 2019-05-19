@@ -4,12 +4,12 @@
 {% for item in articles %}
     <div class="blogs" data-scroll-reveal="enter bottom over 1s">
         <h3 class="blogtitle">
-            <a target="_blank" href="{% url 'blog:article_detail' item.id %}">
+            <a target="_blank" href="{% url 'blog:article_detail' item.unique_id %}">
                 {{ item.title }}
             </a>
         </h3>
         <span class="blogpic">
-                            <a target="_blank" href="{% url 'blog:article_detail' item.id %}">
+                            <a target="_blank" href="{% url 'blog:article_detail' item.unique_id %}">
                                 <img src="{% static item.pic.name %}" alt="">
                             </a>
                         </span>
@@ -17,12 +17,12 @@
         <div class="bloginfo">
             <ul>
                 <li class="author">
-                    <a href="{% url 'blog:author_info' item.author.id %}" target="_blank">
+                    <a href="{% url 'blog:author_info' item.author.unique_id %}" target="_blank">
                         {{ item.author.nickname }}
                     </a>
                 </li>
                 <li class="lmname">
-                    <a href="{% url 'blog:article_list' 'type' item.type.id %}"
+                    <a href="{% url 'blog:article_list' 'type' item.type.unique_id %}"
                        target="_blank">{{ item.type.typename }}</a>
                 </li>
                 <li class="timer">{{ item.addtime }}</li>

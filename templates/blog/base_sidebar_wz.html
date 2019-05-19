@@ -8,9 +8,12 @@
         <h2 class="hometitle">特别推荐</h2>
         <ul>
             {% for item in articles_2 %}
-                <li><i><img src="{% static item.pic.name %}"></i>
+                <li>
+                    <i>
+                        <img src="{% static item.pic.name %}">
+                    </i>
                     <p>{{ item.title }}<span>
-                        <a href="{% url 'blog:article_detail' item.id %}" target="_blank">阅读</a></span></p>
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" target="_blank">阅读</a></span></p>
                 </li>
             {% endfor %}
         </ul>
@@ -22,18 +25,27 @@
         <h2 class="hometitle">推荐文章</h2>
         {% if  articles_1_1 %}
             <ul class="tjpic">
-                <i><img src="{% static articles_1_1.pic.name %}"></i>
+                <i>
+                    <a href="{% url 'blog:article_detail' articles_1_1.unique_id %}" target="_blank">
+                        <img src="{% static articles_1_1.pic.name %}">
+                    </a>
+                </i>
                 <p>
-                    <a href="{% url 'blog:article_detail' articles_1_1.id %}"
+                    <a href="{% url 'blog:article_detail' articles_1_1.unique_id %}"
                        target="_blank">{{ articles_1_1.title }}</a>
                 </p>
             </ul>
         {% endif %}
         <ul class="sidenews">
             {% for item in articles_1 %}
-                <li><i><img src="{% static item.pic.name %}"></i>
+                <li>
+                    <i>
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" target="_blank">
+                            <img src="{% static item.pic.name %}">
+                        </a>
+                    </i>
                     <p>
-                        <a href="{% url 'blog:article_detail' item.id %}" target="_blank">{{ item.title }}</a>
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" target="_blank">{{ item.title }}</a>
                     </p>
                     <span>{{ item.addtime }}</span>
                 </li>
@@ -47,18 +59,27 @@
         <h2 class="hometitle">点击排行</h2>
         {% if  articles_count_1 %}
             <ul class="tjpic">
-                <i><img src="{% static articles_count_1.pic.name %}"></i>
+                <i>
+                    <a href="{% url 'blog:article_detail' articles_count_1.unique_id %}" target="_blank">
+                        <img src="{% static articles_count_1.pic.name %}">
+                    </a>
+                </i>
                 <p>
-                    <a href="{% url 'blog:article_detail' articles_count_1.id %}"
+                    <a href="{% url 'blog:article_detail' articles_count_1.unique_id %}"
                        target="_blank">{{ articles_count_1 }}</a>
                 </p>
             </ul>
         {% endif %}
         <ul class="sidenews">
             {% for item in articles_count %}
-                <li><i><img src="{% static item.pic.name %}"></i>
+                <li>
+                    <i>
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" target="_blank">
+                            <img src="{% static item.pic.name %}">
+                        </a>
+                    </i>
                     <p>
-                        <a href="{% url 'blog:article_detail' item.id %}" target="_blank">{{ item.title }}</a>
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" target="_blank">{{ item.title }}</a>
                     </p>
                     <span>{{ item.addtime }}</span>
                 </li>
@@ -72,7 +93,8 @@
         <h2 class="hometitle">标签云</h2>
         <ul>
             {% for item in tags %}
-                <a href="{% url 'blog:article_list' 'tag' item.id %}" target="_blank">{{ item.tagname }}</a>&nbsp;
+                <a href="{% url 'blog:article_list' 'tag' item.unique_id %}" target="_blank">{{ item.tagname }}</a>
+                &nbsp;
             {% endfor %}
         </ul>
     </div>

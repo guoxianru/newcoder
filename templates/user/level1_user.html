@@ -26,7 +26,7 @@
             {#会员侧边栏#}
 
             <h3>用户中心</h3>
-            <form method="post" enctype="multipart/form-data" action="{% url 'user:user' user.id %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'user:user' user.unique_id %}">
                 {% csrf_token %}
                 <table>
                     <tr>

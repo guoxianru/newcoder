@@ -34,7 +34,7 @@
                 {% for item in articles %}
                     <li>
                         <span>{{ item.addtime }}</span>
-                        <a href="{% url 'blog:article_detail' item.id %}" title="{{ item.title }}" target="_blank">
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" title="{{ item.title }}" target="_blank">
                             {{ item.title }}
                         </a>
                     </li>

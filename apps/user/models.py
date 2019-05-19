@@ -1,5 +1,15 @@
+from shortuuid import ShortUUID
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
+
+# 生成8位唯一标识符
+class NewUUID(ShortUUID):
+    def __init__(self, alphabet=None):
+        if alphabet is None:
+            alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
+        super().__init__(alphabet)
 
 
 # 用户表
@@ -13,6 +23,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=100, unique=True, null=True, blank=True, verbose_name='邮箱')
     desc = models.CharField(max_length=140, null=True, blank=True, verbose_name='个人简介')
     addtime = models.DateField(auto_now_add=True, verbose_name='注册日期')
+    unique_id = models.CharField(max_length=36, default=NewUUID().random(8), unique=True, verbose_name='唯一标识符')
 
     class Meta:
         # 指定在admin管理界面中显示中文,表示单数形式的显示
@@ -29,6 +40,7 @@ class Leavemsg(models.Model):
     content = models.CharField(max_length=140, verbose_name="用户留言")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='留言用户')
     addtime = models.DateTimeField(auto_now_add=True, verbose_name='留言时间')
+    unique_id = models.CharField(max_length=36, default=NewUUID().random(8), unique=True, verbose_name='唯一标识符')
 
     class Meta:
         verbose_name = '用户留言表'

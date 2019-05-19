@@ -26,7 +26,7 @@
             {#会员侧边栏#}
 
             <h3>修改密码</h3>
-            <form method="post" enctype="multipart/form-data" action="{% url 'user:repwd' user.id %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'user:repwd' user.unique_id %}">
                 {% csrf_token %}
                 <table>
                     <tr>

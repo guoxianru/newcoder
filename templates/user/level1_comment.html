@@ -27,7 +27,7 @@
             <h3>评论记录</h3>
             <div class="itemlist">
                 {% for item in comments %}
-                    <div class="blogs zpl" data-scroll-reveal="enter bottom over 1s">
+                    <div class="blogs zpl" style="width: 600px">
                     <span class="blogpic pltx">
                         <a href="">
                             <img src="{% static item.user.photo.name %}" style="width: 50px;height: 50px">
@@ -36,7 +36,7 @@
                         <div class="blogtext plyh">
                             评论
                             <a target="_blank"
-                               href="{% url 'blog:article_detail' item.article.id %}">
+                               href="{% url 'blog:article_detail' item.article.unique_id %}">
                                 {{ item.article.title }}
                             </a>
                             于 {{ item.addtime }}
@@ -48,7 +48,7 @@
                                 {% endautoescape %}
                             </p>
                         </div>
-                        <a href="{% url 'user:comment_del' item.id %}">删除</a>
+                        <a href="{% url 'user:comment_del' item.unique_id %}">删除</a>
                     </div>
                 {% endfor %}
             </div>

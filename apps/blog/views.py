@@ -61,31 +61,31 @@ def more(request, pagenum):
 
 
 # 文章列表
-def article_list(request, key, tid, num=1):
+def article_list(request, key, unique_id, num=1):
     if key == 'type':
         word = 'type'
-        # 通过分类筛选文章
-        articles = Article.objects.filter(type=tid).order_by('-addtime')
         # 根据分类获取类型信息
-        type_detail = Type.objects.filter(id=tid).first()
+        type_detail = Type.objects.filter(unique_id=unique_id).first()
         # 分类ID
-        name_id = type_detail.id
+        name_id = type_detail.unique_id
         # 分类名称
         name_name = type_detail.typename
         # 分类简介
         name_label = type_detail.label
+        # 通过分类筛选文章
+        articles = Article.objects.filter(type=type_detail).order_by('-addtime')
     else:
         word = 'tag'
-        # 通过标签筛选文章
-        articles = Article.objects.filter(tag=tid).order_by('-addtime')
         # 根据标签获取类型信息
-        tag_detail = Tag.objects.filter(id=tid).first()
+        tag_detail = Tag.objects.filter(unique_id=unique_id).first()
         # 标签ID
-        name_id = tag_detail.id
+        name_id = tag_detail.unique_id
         # 标签名称
         name_name = tag_detail.tagname
         # 标签简介
         name_label = tag_detail.label
+        # 通过标签筛选文章
+        articles = Article.objects.filter(tag=tag_detail).order_by('-addtime')
     # 生成分页器
     p = Paginator(articles, 20)
     page = p.get_page(num)
@@ -95,9 +95,10 @@ def article_list(request, key, tid, num=1):
 
 
 # 文章详情
-def article_detail(request, aid):
+def article_detail(request, unique_id):
     # 根据文章id获取文章信息
-    article = Article.objects.filter(id=aid).first()
+    article = Article.objects.filter(unique_id=unique_id).first()
+    aid = article.id
     # 本篇文章所有标签
     all_tag = article.tag.all()
     # 获取本篇文章的上一篇
@@ -138,7 +139,7 @@ def article_detail(request, aid):
         pass
     article.save()
     # 获取本文章所有评论
-    comments = Comment.objects.filter(article=aid).order_by('-addtime')
+    comments = Comment.objects.filter(article=aid, parent=None).order_by('-addtime')
     comment_num = len(comments)
     return render(request, 'blog/level2_article_detail.html', locals())
 
@@ -173,36 +174,36 @@ def like(request, id):
 
 # 评论
 @user_login_req
-def comment(request, aid, pid=0):
+def comment(request, unique_id, pid=0):
     # 从session中去拿登录用户的id
     uid = request.session.get("user_id")
     # 把一个文章评论插入到数据库中
-    user = User.objects.get(id=uid)
-    article = Article.objects.get(id=aid)
+    user = User.objects.get(unique_id=uid)
+    article = Article.objects.get(unique_id=unique_id)
     content = request.POST.get("content", '')
     if content == '':
         messages.success(request, "评论不能为空")
-        return redirect("/blog/article_detail/{}/".format(aid))
+        return redirect("/blog/article_detail/{}/".format(unique_id))
     if pid:
         # 根据model多了一个父评论字段,我们这里也要增加一个新字段
         parent = Comment.objects.get(id=pid)
     else:
         parent = None
     # 把数据保存到数据表中
-    Comment.objects.create(user=user, article=article, content=content, parent=parent)
-    return redirect("/blog/article_detail/{}/".format(aid))
+    Comment.objects.create(user=user, article=article, content=content, parent=parent, unique_id=NewUUID().random(8))
+    return redirect("/blog/article_detail/{}/".format(unique_id))
 
 
 # 收藏
 @user_login_req
 def article_col(request, aid):
     uid = request.session.get("user_id")
-    user = User.objects.get(id=uid)
+    user = User.objects.get(unique_id=uid)
     article = Article.objects.get(id=aid)
     col = Articlecol.objects.filter(user=user, article=article).count()
     # 判断当前文章是否收藏
     if col == 0:
-        Articlecol.objects.create(user=user, article=article)
+        Articlecol.objects.create(user=user, article=article, unique_id=NewUUID().random(8))
         return HttpResponse("1")
     else:
         return HttpResponse("0")
@@ -227,7 +228,7 @@ def leave_msg(request):
         return render(request, 'blog/level1_leave_msg.html', locals())
     if request.method == 'POST':
         uid = request.session.get("user_id")
-        user = User.objects.get(id=uid)
+        user = User.objects.get(unique_id=uid)
         content = request.POST.get("content", '')
         if content == '':
             messages.success(request, "留言不能为空")
@@ -247,6 +248,6 @@ def search(request):
 
 # 作者信息
 @user_login_req
-def author_info(request, aid):
-    author = User.objects.get(id=aid)
+def author_info(request, unique_id):
+    author = User.objects.get(unique_id=unique_id)
     return render(request, 'blog/level4_author_info.html', locals())

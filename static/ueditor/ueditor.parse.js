@@ -890,7 +890,7 @@ UE.parse.register('background', function (utils) {
     //追加默认的表格样式
     styles && utils.cssRule('ueditor_background', me.selector + '{' + styles + '}', document);
 });
-UE.parse.register('list',function(utils){
+UE.parse.register('requirements.txt',function(utils){
     var customCss = [],
         customStyle = {
             'cn'    :   'cn-1-',
@@ -927,7 +927,7 @@ UE.parse.register('list',function(utils){
         customCss.push(selector +' .list-paddingleft-2{padding-left:'+ this.listDefaultPaddingLeft+'px}');
         customCss.push(selector +' .list-paddingleft-3{padding-left:'+ this.listDefaultPaddingLeft*2+'px}');
 
-        utils.cssRule('list', selector +' ol,'+selector +' ul{margin:0;padding:0;}li{clear:both;}'+customCss.join('\n'), document);
+        utils.cssRule('requirements.txt', selector +' ol,'+selector +' ul{margin:0;padding:0;}li{clear:both;}'+customCss.join('\n'), document);
     }
     function applyStyle(nodes){
         var T = this;

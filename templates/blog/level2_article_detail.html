@@ -91,7 +91,7 @@
                             </a>
                         </li>
                         <li class="lmname">
-                            <a href="{% url 'blog:article_list' 'type' article.type.id %}"
+                            <a href="{% url 'blog:article_list' 'type' article.type.unique_id %}"
                                target="_blank">{{ article.type }}</a>
                         </li>
                         <li class="timer">{{ article.addtime }}</li>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="tags">
                     {% for item in all_tag %}
-                        <a href="{% url 'blog:article_list' 'tag' item.id %}"
+                        <a href="{% url 'blog:article_list' 'tag' item.unique_id %}"
                            target="_blank">{{ item.tagname }}</a>&nbsp;&nbsp;
                     {% endfor %}
                     <div class="news_about">
@@ -171,7 +171,7 @@
                 <div class="nextinfo">
                     <p>上一篇：
                         {% if prev_article %}
-                            <a href="{% url 'blog:article_detail' prev_aid %}">
+                            <a href="{% url 'blog:article_detail'  prev_article.unique_id %}" target="_blank">
                                 {{ prev_article.title }}
                             </a>
                         {% else %}
@@ -180,7 +180,7 @@
                     </p>
                     <p>下一篇：
                         {% if next_article %}
-                            <a href="{% url 'blog:article_detail' next_aid %}">
+                            <a href="{% url 'blog:article_detail' next_article.unique_id %}" target="_blank">
                                 {{ next_article.title }}
                             </a>
                         {% else %}
@@ -194,7 +194,7 @@
                     <ul>
                         {% for item in relevant_article %}
                             <li>
-                                <a href="{% url 'blog:article_detail' item.id %}" title="{{ item.title }}"
+                                <a href="{% url 'blog:article_detail' item.unique_id %}" title="{{ item.title }}"
                                    target="_blank">
                                     {{ item.title }}
                                 </a>
@@ -214,7 +214,7 @@
                             ，才可参与评论！
                         </h2>
                     {% else %}
-                        <form method="post" action="{% url 'blog:comment' article.id %}">
+                        <form method="post" action="{% url 'blog:comment' article.unique_id %}">
                             {% csrf_token %}
                             <h2 class="nr">评论内容
                                 <span style="font-size: 12px">（最长140字符，暂不支持上传图片和文件）</span>
@@ -273,7 +273,8 @@
                                 {% if request.session.user_id %}
                                     <input type="button" value="我要点评" class="button_reply dianping">
                                     <div class="reply" hidden>
-                                        <form action="/blog/comment/{{ article.id }}/{{ item.id }}/" method="post">
+                                        <form action="/blog/comment/{{ article.unique_id }}/{{ item.id }}/"
+                                              method="post">
                                             {% csrf_token %}
                                             <textarea name="content"
                                                       style="width: 570px;height: 100px;font-size: 22px"></textarea>
@@ -302,12 +303,12 @@
                     {#我要点评#}
                     <script>
                         $(".button_reply").click(function () {
-                            //要判断一下状态,是否是隐藏
+                            {#要判断一下状态,是否是隐藏#}
                             if ($(this).next().is(":hidden")) {
-                                //展示隐藏的文本域
+                                {#展示隐藏的文本域#}
                                 $(this).next().show()
                             } else {
-                                //隐藏文本域
+                                {#隐藏文本域#}
                                 $(this).next().hide()
                             }
                         });
@@ -316,8 +317,9 @@
 
                     {#文章收藏#}
                     <script>
-                        var aid = {{ article.id }};
+
                         $("#btn-col").click(function () {
+                            var aid = {{ article.id }};
                             $.get("/blog/article_col/" + aid + "/", function (data) {
                                 if (data == "1") {
                                     alert("收藏成功!");

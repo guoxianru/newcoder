@@ -25,15 +25,15 @@ urlpatterns = [
     # 注销
     path('sign_out/', views.sign_out, name='sign_out'),
     # 用户中心
-    path('user/<int:uid>/', views.user, name='user'),
+    path('user/<str:unique_id>/', views.user, name='user'),
     # 用户修改密码
-    path('repwd/<int:uid>/', views.repwd, name='repwd'),
+    path('repwd/<str:unique_id>/', views.repwd, name='repwd'),
     # 用户评论记录
-    path('comment/<int:uid>/', views.comment, name='comment'),
+    path('comment/<str:unique_id>/', views.comment, name='comment'),
     # 用户删除评论记录
-    path('comment_del/<int:cid>/', views.comment_del, name='comment_del'),
+    path('comment_del/<str:unique_id>/', views.comment_del, name='comment_del'),
     # 用户收藏记录
-    path('articlecol/<int:uid>/', views.articlecol, name='articlecol'),
+    path('articlecol/<str:unique_id>/', views.articlecol, name='articlecol'),
     # 用户删除收藏记录
-    path('articlecol_del/<int:cid>/', views.articlecol_del, name='articlecol_del'),
+    path('articlecol_del/<str:unique_id>/', views.articlecol_del, name='articlecol_del'),
 ]

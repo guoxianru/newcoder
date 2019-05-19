@@ -4,16 +4,16 @@
     <div class="tuijian">
         <ul class="sidenews">
             <li>
-                <p><a href="{% url 'user:user' user.id %}">用户中心</a></p>
+                <p><a href="{% url 'user:user' user.unique_id %}">用户中心</a></p>
             </li>
             <li>
-                <p><a href="{% url 'user:repwd' user.id %}">修改密码</a></p>
+                <p><a href="{% url 'user:repwd' user.unique_id %}">修改密码</a></p>
             </li>
             <li>
-                <p><a href="{% url 'user:comment' user.id %}">评论记录</a></p>
+                <p><a href="{% url 'user:comment' user.unique_id %}">评论记录</a></p>
             </li>
             <li>
-                <p><a href="{% url 'user:articlecol' user.id %}">收藏文章</a></p>
+                <p><a href="{% url 'user:articlecol' user.unique_id %}">收藏文章</a></p>
             </li>
         </ul>
     </div>

@@ -36,9 +36,6 @@
     {#百度验证#}
     <meta name="baidu-site-verification" content="EQthgGmrll"/>
     {#百度验证#}
-    {#360验证#}
-    <meta name="360-site-verification" content="c9f567294481e8a370740518e910e408"/>
-    {#360验证#}
     {#百度自动推送#}
     <script>
         (function () {
@@ -54,6 +51,10 @@
         })();
     </script>
     {#百度自动推送#}
+
+    {#360验证#}
+    <meta name="360-site-verification" content="c9f567294481e8a370740518e910e408"/>
+    {#360验证#}
     {#360自动推送#}
     <script>
         (function () {
@@ -79,30 +80,30 @@
             </h1>
             <li style="margin-left: -70px"><a href="/">网站首页</a></li>
             <li>
-                <a href="{% url 'blog:article_list' 'type' 1 %}">心情随笔</a>
+                <a href="{% url 'blog:article_list' 'type' type_1.unique_id %}">心情随笔</a>
                 <ul class="sub-nav">
                     {% for tag in tags_1 %}
-                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.unique_id %}">{{ tag.tagname }}</a></li>
                     {% endfor %}
-                    <li><a href="{% url 'blog:article_list' 'type' 1 %}">全部</a></li>
+                    <li><a href="{% url 'blog:article_list' 'type' type_1.unique_id %}">全部</a></li>
                 </ul>
             </li>
             <li>
-                <a href="{% url 'blog:article_list' 'type' 2 %}">时事点评</a>
+                <a href="{% url 'blog:article_list' 'type' type_2.unique_id %}">时事点评</a>
                 <ul class="sub-nav">
                     {% for tag in tags_2 %}
-                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.unique_id %}">{{ tag.tagname }}</a></li>
                     {% endfor %}
-                    <li><a href="{% url 'blog:article_list' 'type' 2 %}">全部</a></li>
+                    <li><a href="{% url 'blog:article_list' 'type' type_2.unique_id %}">全部</a></li>
                 </ul>
             </li>
             <li>
-                <a href="{% url 'blog:article_list' 'type' 3 %}">技术分享</a>
+                <a href="{% url 'blog:article_list' 'type' type_3.unique_id %}">技术分享</a>
                 <ul class="sub-nav">
                     {% for tag in tags_3 %}
-                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.unique_id %}">{{ tag.tagname }}</a></li>
                     {% endfor %}
-                    <li><a href="{% url 'blog:article_list' 'type' 3 %}">全部</a></li>
+                    <li><a href="{% url 'blog:article_list' 'type' type_3.unique_id %}">全部</a></li>
                 </ul>
             </li>
             <li><a href="{% url 'blog:time_axis' %}">时间轴</a></li>
@@ -146,27 +147,27 @@
             <dd class="list_dd">
                 <ul>
                     {% for tag in tags_1 %}
-                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.unique_id %}">{{ tag.tagname }}</a></li>
                     {% endfor %}
-                    <li><a href="{% url 'blog:article_list' 'type' 1 %}">全部</a></li>
+                    <li><a href="{% url 'blog:article_list' 'type' type_1.unique_id %}">全部</a></li>
                 </ul>
             </dd>
             <dt class="list_dt"><a href="#">时事点评</a></dt>
             <dd class="list_dd">
                 <ul>
                     {% for tag in tags_2 %}
-                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.unique_id %}">{{ tag.tagname }}</a></li>
                     {% endfor %}
-                    <li><a href="{% url 'blog:article_list' 'type' 2 %}">全部</a></li>
+                    <li><a href="{% url 'blog:article_list' 'type' type_2.unique_id %}">全部</a></li>
                 </ul>
             </dd>
             <dt class="list_dt"><a href="#">技术分享</a></dt>
             <dd class="list_dd">
                 <ul>
                     {% for tag in tags_3 %}
-                        <li><a href="{% url 'blog:article_list' 'tag' tag.id %}">{{ tag.tagname }}</a></li>
+                        <li><a href="{% url 'blog:article_list' 'tag' tag.unique_id %}">{{ tag.tagname }}</a></li>
                     {% endfor %}
-                    <li><a href="{% url 'blog:article_list' 'type' 3 %}">全部</a></li>
+                    <li><a href="{% url 'blog:article_list' 'type' type_3.unique_id %}">全部</a></li>
                 </ul>
             </dd>
             <dt class="list_dt"><a href="{% url 'blog:time_axis' %}">时间轴</a></dt>
@@ -200,7 +201,7 @@
 {#网页底部开始#}
 <footer>
     <p>
-        <strong>Copyright &copy; 2019-2020</strong> |
+        <strong>Copyright &copy; 2019-2029</strong> |
         <a href="/admin" target="_blank">All Rights Reserved</a> |
         <a href="/" target="_blank">newcoder.top</a> |
         <a href="http://www.beian.miit.gov.cn" target="_blank">冀ICP备18036301号-1</a>
