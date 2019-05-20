@@ -36,7 +36,8 @@
                         <a href="{% url 'blog:article_detail' item.unique_id %}" target="_blank">{{ item.title }}</a>
                     </h3>
                     <span class="blogpic">
-                        <a href="{% url 'blog:article_detail' item.unique_id %}" title="{{ item.title }}" target="_blank">
+                        <a href="{% url 'blog:article_detail' item.unique_id %}" title="{{ item.title }}"
+                           target="_blank">
                         <img src="{% static item.pic.name %}" alt=""></a>
                     </span>
                     <p class="blogtext">{{ item.label }}</p>
@@ -62,29 +63,59 @@
 
             {#分页#}
             <div class="pagelist">
-                <a title="Total record">&nbsp;<b>{{ p.num_pages }}</b>&nbsp;</a>&nbsp;
-
-                <span>{{ page.number }}/{{ p.num_pages }}</span>&nbsp;
-
-                <a href="{% url 'blog:article_list' word name_id 1 %}">首页</a>
-
+                {#上一页#}
                 {% if page.has_previous %}
-                    <a href="{% url 'blog:article_list' word name_id page.previous_page_number %}">上一页</a>&nbsp;
+                    <a href="{% url 'blog:article_list' word name_id page.previous_page_number %}">上一页</a>
                 {% else %}
-                    <span>上一页</span>&nbsp;
+                    <span>上一页</span>
                 {% endif %}
+                {#上一页#}
 
-                {% for i in prange %}
-                    <a href="{% url 'blog:article_list' word name_id i %}">{{ i }}</a>&nbsp;
-                {% endfor %}
+                {#第一页#}
+                {% if first %}
+                    <a title="首页" href="{% url 'blog:article_list' word name_id 1 %}">1</a>
+                {% endif %}
+                {#第一页#}
 
+                {#当前页左边连续的页码号#}
+                {% if left %}
+                    {% if left_has_more %}
+                        <span>...</span>
+                    {% endif %}
+                    {% for i in left %}
+                        <a href="{% url 'blog:article_list' word name_id i %}">{{ i }}</a>
+                    {% endfor %}
+                {% endif %}
+                {#当前页左边连续的页码号#}
+
+                {#当前页#}
+                <a title="当前页" style="color: #6dbfff">{{ page_number }}</a>
+                {#当前页#}
+
+                {#当前页右边连续的页码号#}
+                {% if right %}
+                    {% for i in right %}
+                        <a href="{% url 'blog:article_list' word name_id i %}">{{ i }}</a>
+                    {% endfor %}
+                    {% if right_has_more %}
+                        <span>...</span>
+                    {% endif %}
+                {% endif %}
+                {#当前页右边连续的页码号#}
+
+                {#最后一页#}
+                {% if last %}
+                    <a title="尾页" href="{% url 'blog:article_list' word name_id total_pages %}">{{ total_pages }}</a>
+                {% endif %}
+                {#最后一页#}
+
+                {#下一页#}
                 {% if page.has_next %}
-                    <a href="{% url 'blog:article_list' word name_id page.next_page_number %}">下一页</a>&nbsp;
+                    <a href="{% url 'blog:article_list' word name_id page.next_page_number %}">下一页</a>
                 {% else %}
-                    <span>下一页</span>&nbsp;
+                    <span>下一页</span>
                 {% endif %}
-
-                <a href="{% url 'blog:article_list' word name_id p.num_pages %}">尾页</a>
+                {#下一页#}
             </div>
             {#分页#}
 

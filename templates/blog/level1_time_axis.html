@@ -30,11 +30,12 @@
             <a href="/" class="n1">网站首页</a><a class="n2">时间轴</a>
         </h1>
         <div class="timebox">
-            <ul id="list" style="display:none;">
-                {% for item in articles %}
+            <ul id="list">
+                {% for item in article_time %}
                     <li>
-                        <span>{{ item.addtime }}</span>
-                        <a href="{% url 'blog:article_detail' item.unique_id %}" title="{{ item.title }}" target="_blank">
+                        <span>{{ item.addtime | date:"Y-m-d" }}</span>
+                        <a href="{% url 'blog:article_detail' item.unique_id %}"
+                           title="{{ item.title }}" target="_blank">
                             {{ item.title }}
                         </a>
                     </li>

@@ -1,4 +1,4 @@
-var pager = new ETNGpager('requirements.txt', 'list2', 24, 10);
+var pager = new ETNGpager('list', 'list2', 24, 10);//24Ϊÿҳ��ʾ������10Ϊ������ʾ�˵���
 var curP = 1;
 page();
 

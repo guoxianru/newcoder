@@ -1,25 +1,25 @@
 var ETNGpager = function (srcName, dstName, cntPP, cntPS) {
     this.srcName = srcName;
     this.dstName = dstName;
-    this.curP = 1;
-    this.cntPP = cntPP || 2;
-    this.cntPS = cntPS || 3;
+    this.curP = 1;//Ĭ�ϵ�ǰҳΪ��һҳ
+    this.cntPP = cntPP || 2;//Ĭ��ÿҳ������¼
+    this.cntPS = cntPS || 3;//Ĭ��ÿҳ��ʾ5����ҳ������
     this.items = [];
-    this.showPNP = true;
-    this.showType = true;
+    this.showPNP = true;/*��ʾ����ҳ����*/
+    this.showType = true;/*������ҳ*/
     this.result = {pagedata: [], pagebar: '', limit: [0, 0], report: ''};
-    this.parse();
+    this.parse();/*�ܼ�¼��*/
 };
 ETNGpager.prototype.page = function () {
-    this.cntP = Math.ceil(this.cntR / this.cntPP);
-    this.cntS = Math.ceil(this.cntP / this.cntPS);
-    this.curS = Math.ceil(this.curP / this.cntPS);
-    this.preP = this.curP - 1;
-    this.nextP = this.curP + 1;
-    this.preS = this.curS - 1;
-    this.nextS = this.curS + 1;
-    this.startR = (this.curP - 1) * this.cntPP + 1;
-    this.endR = (this.curP * this.cntPP > this.cntR) ? this.cntR : this.curP * this.cntPP;
+    this.cntP = Math.ceil(this.cntR / this.cntPP);/*��ҳ��*/
+    this.cntS = Math.ceil(this.cntP / this.cntPS);/*�ܶ���*/
+    this.curS = Math.ceil(this.curP / this.cntPS);/*��ǰ��*/
+    this.preP = this.curP - 1;/*��һҳ*/
+    this.nextP = this.curP + 1;/*��һҳ*/
+    this.preS = this.curS - 1;/*��һ��*/
+    this.nextS = this.curS + 1;/*��һ��*/
+    this.startR = (this.curP - 1) * this.cntPP + 1;/*��ʼ��¼*/
+    this.endR = (this.curP * this.cntPP > this.cntR) ? this.cntR : this.curP * this.cntPP;/*������¼*/
     this.result['pagedata'] = [];
     if (this.showType) {
         this.perSide = Math.floor(this.cntPS / 2);
@@ -53,4 +53,3 @@ ETNGpager.prototype.create = function () {
     document.getElementById(this.dstName).innerHTML = '<li>' + this.items.slice(this.startR - 1, this.endR).join('</li><li>') + '</li>';
     document.getElementById(this.dstName).innerHTML += '<div class="pagelist">' + this.result['report'] + this.result['pagebar'] + '</div>';
 };
-
