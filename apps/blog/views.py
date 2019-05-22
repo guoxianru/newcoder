@@ -115,6 +115,8 @@ def article_list(request, key, unique_id, num=1):
         # 比如分页页码列表是 [1, 2, 3, 4]，那么获取的就是 right = [2, 3]
         # 注意这里只获取了当前页码后连续两个页码，你可以更改这个数字以获取更多页码
         right = page_range[page_number:page_number + 2]
+        if len(right) == 0:
+            right = [1]
         # 如果最右边的页码号比最后一页的页码号减去 1 还要小
         # 说明最右边的页码号和最后一页的页码号之间还有其它页码，因此需要显示省略号，通过 right_has_more 来指示
         if right[-1] < total_pages - 1:
