@@ -304,6 +304,9 @@ def leave_msg(request):
 @user_login_req
 def search(request):
     keyword = request.POST.get('keyboard', '')
+    if keyword == '':
+        messages.success(request, "搜索关键词不能为空")
+        return redirect("/")
     articles = Article.objects.filter(Q(title__icontains=keyword) | Q(author__nickname__icontains=keyword))
     articles_num = len(articles)
     return render(request, 'blog/level3_search.html', locals())
