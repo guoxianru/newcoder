@@ -44,7 +44,7 @@
                     <div class="bloginfo">
                         <ul>
                             <li class="author">
-                                <a href="{% url 'blog:author_info' item.author.id %}" target="_blank">
+                                <a href="{% url 'blog:author_info' item.author.unique_id %}" target="_blank">
                                     {{ item.author.nickname }}
                                 </a>
                             </li>
