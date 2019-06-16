@@ -1,6 +1,6 @@
 asn1crypto
 certifi
-cff
+cffi
 chardet
 cryptography
 demjson
