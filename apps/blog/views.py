@@ -180,26 +180,29 @@ def article_detail(request, unique_id):
     # 根据父级字段是否有值来筛选出直接评论文章的评论
     comments = article.comment_set.filter(parent=None).order_by("-addtime")
     # 文章浏览量+1
-    id = request.session.get('user_id')
-    ids = request.session.get('ids')
-    if id:
-        if ids:
-            if id in ids:
-                pass
-            else:
-                # 加一操作
-                article.count += 1
-                ids.append(id)
-            # 把新的ids写入到session中
-            request.session['ids'] = ids
-        else:
-            ids = []
-            ids.append(id)
-            request.session['ids'] = ids
-            # 加一操作
-            article.count += 1
-    else:
-        pass
+    # 点击1下+1
+    article.count += 1
+    # # 注册用户点击才会+1
+    # id = request.session.get('user_id')
+    # ids = request.session.get('ids')
+    # if id:
+    #     if ids:
+    #         if id in ids:
+    #             pass
+    #         else:
+    #             # 加一操作
+    #             article.count += 1
+    #             ids.append(id)
+    #         # 把新的ids写入到session中
+    #         request.session['ids'] = ids
+    #     else:
+    #         ids = []
+    #         ids.append(id)
+    #         request.session['ids'] = ids
+    #         # 加一操作
+    #         article.count += 1
+    # else:
+    #     pass
     article.save()
     # 获取本文章所有评论
     comments = Comment.objects.filter(article=aid, parent=None).order_by('-addtime')
