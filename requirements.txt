@@ -4,7 +4,7 @@ cffi
 chardet
 cryptography
 demjson
-Django==2.1.7
+Django==2.1
 django-redis
 django-summernote
 idna
