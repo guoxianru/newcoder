@@ -4,7 +4,7 @@ cffi
 chardet
 cryptography
 demjson
-Django==2.1.2
+Django==2.1.9
 django-redis
 django-summernote
 idna
@@ -19,4 +19,3 @@ shortuuid
 six
 sqlparse
 urllib3
-uWSGI
